@@ -1,0 +1,234 @@
+.userinfo_head{
+
+line-height: 38px;
+font-weight: bold;
+height: 38px;
+font-size: 12px;
+padding: 0 10px;
+margin: 10px 0;
+
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+	background: #f3e0f7; /* for non-css3 browsers */
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#F4E7F7'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3e0f7)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fff,  #f3e0f7); /* for firefox 3.6+ */ 
+
+border-radius: 4px;
+-moz-border-radius: 4px;
+-webkit-border-radius: 4px;
+cursor: pointer;
+}
+
+.userinfo_head a{
+	background: white;
+	color: #8E0B8C !important;
+	border: 1px solid #E2D0E8;
+	background: #8E0B8C;
+	display: block;
+	float: right;
+	height: 22px;
+	line-height: 22px;
+	text-transform: uppercase;
+	color: white!important;
+	font-size: 10px;
+	padding: 0 14px;
+	font-weight: bold;
+	margin-top: 7px;
+	border-radius: 26px;
+	-moz-border-radius: 26px;
+	-webkit-border-radius: 26px;
+
+
+
+
+background: white;
+color: #8E0B8C !important;
+border: 1px solid #E2D0E8;
+}
+
+.userinfo_tab, ul.adminformlist li.userinfo_tab{
+
+
+	margin: 10px 0;
+
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+}
+.userinfo_tab input, .userinfo_tab select, .userinfo_tab textarea{
+	width:200px;}
+
+	.shfield_multitext_wrapper input, .shfield_multitext_wrapper select{
+		width:80px;
+	}
+	.shfield_multitext_wrapper .buttonplus{
+		width:150px;
+	}
+	.shfield_multitext_wrapper .buttonminus{
+		width:20px;
+	}
+    .zeFieldCheck{
+	display:block;
+	float:left;
+	width:13px;
+	height:14px;
+	background:url("images/unchecked.png") no-repeat left top transparent;
+	cursor:pointer;
+	margin-right:10px;
+    
+    }
+    .zeFieldCheck.checked{
+	background:url("images/checked.png") no-repeat left top transparent;
+    }
+
+    .zeRemoveSpan{
+	display:block;
+	float:right;
+	width:16px;
+	height:16px;
+	background:url("images/remove.png") no-repeat left top transparent;
+	cursor:pointer;
+	margin-right:10px;
+    }
+
+    .zeOpenCloseSpan{
+	display:block;
+	float:right;
+	width:16px;
+	height:16px;
+	background:url("images/plus.png") no-repeat left top transparent;
+	cursor:pointer;
+    }
+    .zeOpenCloseSpan:hover{
+	background:url("images/plus_hover.png") no-repeat left top transparent;
+   }
+    .zeOpened .zeOpenCloseSpan{
+	background:url("images/minus.png") no-repeat left top transparent;
+   }.
+    .zeOpened .zeOpenCloseSpan:hover{
+	background:url("images/minus_hover.png") no-repeat left top transparent;
+   }
+
+   .userinfo_tab_head{
+	padding: 10px;
+	cursor: pointer;
+   }
+
+   .userinfo_tab_content{
+	display:none;
+	padding: 10px;
+
+	border-top: 1px solid #EDDFF2;
+
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	background: #F8EDFA;
+  }
+    .zeOpened .userinfo_tab_content{
+	display:block;
+  }
+  .userinfo_tab_0{
+	display:none;
+  }
+  .zeUniqueIdClass{
+	float:none !important;
+	margin:0 !important;
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	padding:0px 5px;
+   }
+   .zeinputbox{
+	border-radius: 2px;
+	-moz-border-radius: 2px;
+	-webkit-border-radius: 2px;
+	width:120px;
+   }
+
+   .hkm_color_input[readonly]{
+	background:#ddd !important;
+	color:#ddd !important;
+   }
+
+
+.zeLiWrap{
+
+
+	background: #f0f0f0;
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#fff'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#fff)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #eee, #fff); /* for firefox 3.6+ */
+
+	padding: 10px 10px !important;
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+
+	margin: 10px 0 !important;
+
+	color: #444;
+}
+
+
+
+.zeLiWrap input, .zeLiWrap textarea, .zeLiWrap select, .zeLiWrap button {
+	float: right;
+	margin: 5px 5px 5px 0;
+	width:60%;
+	clear:right;
+
+
+
+
+padding: 4px;
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+}
+
+.zeClear{
+	clear:both;
+}
+
+.shfield_multitext_wrapper div{
+	clear:both;
+}
+.zeLabelsOpts4Sels input{
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+	background: #f3e0f7; /* for non-css3 browsers */
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#F4E7F7'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3e0f7)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fff,  #f3e0f7); /* for firefox 3.6+ */ 
+
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+	cursor: pointer;
+	text-align:center;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	color: #8E0B8C !important;
+
+}
+
+ul.sortable>li {
+	position: relative;
+}
+
+.zeLiParamuserinfofieldName{
+	display:none;
+}
+#userinfo_tab_ul_userinfo{
+	padding:0px !important;
+}

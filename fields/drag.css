@@ -1,0 +1,271 @@
+ul.sortable>li {
+	position: relative;
+}
+
+ul.boxy {
+	list-style-type: none;
+	padding: 4px 4px 0 4px !important;
+	margin: 0px;
+	/*font-size:13px;*/
+	min-height:20px;
+	border:1px solid transparent;
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+
+}
+ul.boxy>li {
+	cursor:move;
+	margin-bottom: 6px !important;
+	padding: 8px 8px !important;
+	border: 1px solid #ccc;
+	border-top-color: #e0e0e0;
+	background-color: #eee;
+	color:#666;
+
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#F0F0F0'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ccc)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fff,  #ccc); /* for firefox 3.6+ */ 
+
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+}
+
+ul.boxier {
+	list-style-type: none;
+	padding: 4px 4px 0 4px !important;
+	margin: 0px;
+	min-height:100px;
+	/*font-size:13px;*/
+	min-height:20px;
+	border:1px solid transparent;
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+
+}
+ul.boxier>li {
+	cursor:move;
+	margin-bottom: 6px !important;
+	padding: 8px 8px !important;
+
+	color:#8E0B8C;
+
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+	background: #f3e0f7; /* for non-css3 browsers */
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#F4E7F7'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3e0f7)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #fff,  #f3e0f7); /* for firefox 3.6+ */ 
+
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+
+}
+
+ul.boxy>li:hover{
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#fff'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#ccc), to(#fff)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #ccc, #fff); /* for firefox 3.6+ */ 
+
+	border: 1px solid #ccc;
+	border-bottom-color: #e0e0e0;
+
+}
+ul.boxier>li:hover {
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f3e0f7', endColorstr='#fff'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#f3e0f7), to(#fff)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #f3e0f7, #fff); /* for firefox 3.6+ */ 
+
+	border: 1px solid #E2D0E8;
+	border-bottom-color: #EDDFF2;
+}
+
+.zeFieldLabel{
+	font-weight:bold;
+	font-size:13px;
+	text-shadow: white 1px 1px 1px;
+	filter: Shadow(Color=#ffffff, Direction=45, Strength=1);
+
+
+	-moz-user-select: -moz-none;
+	-o-user-select: none;
+	-khtml-user-select: none;
+	-webkit-user-select: none;
+	user-select: none;
+}
+.ze_fieldtype_alias_div ul.adminformlist li{
+	color:black;
+}
+.zeDropdownFields{
+
+	margin-bottom:40px;
+}
+    .zeDropdownFields>fieldset{
+	background:#fafafa !important;
+	border: 1px solid #ddd !important;
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+
+	padding:5px !important;
+
+    }
+
+    .zeDropdownFields>fieldset>legend{
+background: white;
+color: #8E0B8C !important;
+border: 1px solid #E2D0E8;
+
+text-align:center;
+
+line-height: 22px;
+text-transform: uppercase;
+font-size: 10px;
+padding: 0 14px;
+font-weight: bold;
+margin-top: 7px;
+border-radius: 26px;
+-moz-border-radius: 26px;
+-webkit-border-radius: 26px;
+
+	}
+
+
+  .zeDropdownFields>fieldset.boxyFiedset>legend{
+color: #666 !important;
+
+}
+
+    .ze_fieldtype_alias_div{
+	background:#fff;
+	padding:5px;
+	border:1px solid #ccc;
+	margin:5px;
+	z-index:1000 !important;
+	display:none;
+	cursor:default;
+
+
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+    }
+
+ul.boxier .ze_fieldtype_alias_div{
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+}
+
+    .zeOpened .ze_fieldtype_alias_div{
+	display:block;
+    }
+    .ze_fieldtype_div select{
+
+	float:none !important;
+	display:inline !important;
+    }	
+    .zeOpenCloseSpan{
+	display:block;
+	float:right;
+	width:16px;
+	height:16px;
+	background:url("plus.png") no-repeat left top transparent;
+	cursor:pointer;
+    }
+    .zeOpenCloseSpan:hover{
+	background:url("plus_hover.png") no-repeat left top transparent;
+   }
+    .zeOpened .zeOpenCloseSpan{
+	background:url("minuz.png") no-repeat left top transparent;
+   }.
+    .zeOpened .zeOpenCloseSpan:hover{
+	background:url("minus_hover.png") no-repeat left top transparent;
+   }
+
+    ul.boxy .zeOpenCloseSpan{
+	background:url("plus_gray.png") no-repeat left top transparent;
+    }
+    ul.boxy .zeOpenCloseSpan:hover{
+	background:url("plus_hover_gray.png") no-repeat left top transparent;
+   }
+    ul.boxy .zeOpened .zeOpenCloseSpan{
+	background:url("minus_gray.png") no-repeat left top transparent;
+   }
+    ul.boxy .zeOpened .zeOpenCloseSpan:hover{
+	background:url("minus_hover_gray.png") no-repeat left top transparent;
+   }
+   .ze_sorted_div input{
+	width:20px;
+	float:none !important;
+   }
+   .ze_sorted_div label{
+	float:none !important;
+	width:60px !important;
+	display:inline !important;
+   }
+
+
+#jform_params_comments-lbl{
+
+	width:100%;
+	max-width: 100%;
+	float:none;
+	border-bottom:#AF0FAD 2px solid;
+	padding-bottom:15px;
+	margin-bottom:20px;
+}
+
+
+
+.zeLiWrap{
+
+
+	background: #f0f0f0;
+
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#cccccc', endColorstr='#fff'); /* for IE */
+	background: -webkit-gradient(linear, left top, left bottom, from(#eee), to(#fff)); /* for webkit browsers */
+	background: -moz-linear-gradient(top,  #eee, #fff); /* for firefox 3.6+ */
+
+	padding: 10px 10px !important;
+	border: 1px solid #E2D0E8;
+	border-top-color: #EDDFF2;
+	border-radius: 4px;
+	-moz-border-radius: 4px;
+	-webkit-border-radius: 4px;
+
+	margin: 10px 0 !important;
+
+	color: #444;
+}
+
+
+
+.zeLiWrap input, .zeLiWrap textarea, .zeLiWrap select, .zeLiWrap button {
+	float: right;
+	margin: 5px 5px 5px 0;
+	width:60%;
+	clear:right;
+
+
+
+
+padding: 4px;
+border-radius: 2px;
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+}
+
+.zeClear{
+	clear:both;
+}
