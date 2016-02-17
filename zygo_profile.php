@@ -293,7 +293,9 @@
                 if ($fieldReq > 0) {
                     $form->setFieldAttribute($fname, 'required', $fieldReq == 2, 'zygo_profile');
                 } else {
-                    $form->removeField($fname, 'zygo_profile');
+                    if ($form->getName()=='com_users.registration') {
+                        $form->removeField($fname, 'zygo_profile');
+                    }
                 }
 
             }
