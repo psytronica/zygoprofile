@@ -16,7 +16,8 @@ abstract class ZygoHelper {
 	public static $profile = array();
 	public static $uids_info = array();
 	public static $zygo_plugin = array();
-    public static $noavatar = "plugins/user/zygo_profile/fields/images/noPhoto.jpg";
+	public static $zygo_params = null;
+    	public static $noavatar = "plugins/user/zygo_profile/fields/images/noPhoto.jpg";
 
 	public static function init(){
 		self::getProfileParams();
@@ -77,7 +78,8 @@ abstract class ZygoHelper {
 			$avatar->linkLarge = str_replace('/thumb', '/large', $link);
 		}else{
 
-			$avatar->link = self::$noavatar;
+			$avatar->link = (self::$zygo_params && self::$zygo_params->get("noavatar"))?
+				self::$zygo_params->get("noavatar") : self::$noavatar;
 			$avatar->linkLarge = '';		 	
 		}
 
@@ -250,11 +252,11 @@ abstract class ZygoHelper {
 		if(self::$profile) return;
 
        	self::$zygo_plugin = JPluginHelper::getPlugin('user', 'zygo_profile');
-		$params = new JRegistry();
-		$params->loadString(self::$zygo_plugin->params);
-		if(empty($params)) return;
+		self::$zygo_params = new JRegistry();
+		self::$zygo_params->loadString(self::$zygo_plugin->params);
+		if(empty(self::$zygo_params)) return;
 
-		$userinfo = $params->get('userinfo');
+		$userinfo = self::$zygo_params->get('userinfo');
 		if(empty($userinfo) || !is_object($userinfo) && !is_array($userinfo)) return;
 		
 		self::$profile = array();
@@ -318,11 +320,6 @@ abstract class ZygoHelper {
 			}else{
 				return $plural2;
 			}
-
-
 		}
 	}
-
-
 }
-
