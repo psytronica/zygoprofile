@@ -300,10 +300,37 @@
         }            
     }
 
+
+    /**
+     * Getting field attributes from user attribute string in plugin field parameters
+     *
+     * if user make incorrect string of attributes this function will show error string
+     * and user attributes will not appear in html attribs of field
+     * 
+     * @return array (of attributes) or null
+     */
+    private function parseFieldAttributes($fieldParams, $fname){
+
+        try
+        {
+            $attribs = new SimpleXMLElement("<element $fieldParams />");
+
+            return $attribs->attributes();
+        }
+        catch (Exception $e)
+        {
+            echo "<code>".JText::_("FIELD_ATTRIBUTES_PROBLEM").": '".$fname."'</code>";
+        }
+
+        return null;
+
+    }
+
+
     /**
      * Generate user extended profile xml
      *
-     * Metod is called before generating user registration/change account details form
+     * Method is called before generating user registration/change account details form
      * (frontend and backend) and before showing user profile
      * 
      * @return   string (of xml data)
@@ -331,12 +358,26 @@
                 $fieldDefaultValue=(is_array($userinfo->fieldDefaultValue))? $userinfo->fieldDefaultValue[$fieldNum] : $userinfo->fieldDefaultValue->$fieldNum;
 
 
-                if($fieldFilter) $fieldParams.=' filter="'.$fieldFilter.'" ';      
+                $fParams = array(
+                    "name" => $fname,
+                    "type" => $type,
+                    "id" => $fname,
+                    "description" => $fieldDescription,
+                    "label" => $code,
+                    "message" => $fieldMessage
+                );
+
+                if($fieldDefaultValue){
+                    $fParams["default"] = $fieldDefaultValue;
+                }
+
+
+                if($fieldFilter) $fParams['filter'] = $fieldFilter;      
 
 
                 switch ($type) {
-                    case 'multiselect':     
-                        $fieldParams.=' multiple="true" ';               
+                    case 'multiselect':  
+                        $fParams['multiple'] = "true";                
                     case 'select':
                         $type='list';
                         break;
@@ -349,15 +390,23 @@
                         # add corresponding information here
                         break;
                 }
-                $html .='<field
-                        name="'.$fname.'"
-                        type="'.$type.'"
-                        id="'.$fname.'"
-                        description="'.($fieldDescription).'"
-                        label="'.($code).'"
-                        message="'.($fieldMessage).'"
-                        default="'.($fieldDefaultValue).'"
-                        '.$fieldParams;
+
+                if($fieldParams){
+
+                    $fParamsArr = @$this->parseFieldAttributes($fieldParams, $code);
+                    if(!empty($fParamsArr)){
+                        foreach($fParamsArr as $pname=>$pval){
+                            if(!isset($fParams[$pname])){
+                                $fParams[$pname] = ((array)$pval)[0];
+                            }
+                        }
+                    }
+                }
+
+                $html .= "<field\n";
+                foreach($fParams as $pname=>$pval){
+                    $html .= $pname.'="'.$pval.'"'."\n";
+                }
                     if(in_array($type, $showOptionsVariants) && is_array($userinfo->fieldOptions_value) && isset($userinfo->fieldOptions_value[$fieldNum]) && !empty($userinfo->fieldOptions_value[$fieldNum])){
                         $html .='>';
 
@@ -395,6 +444,7 @@
             }
 
         }
+
                 $html .= '</fieldset>
             </fields>
         </form>';
