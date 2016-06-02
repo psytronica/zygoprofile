@@ -397,7 +397,8 @@
                     if(!empty($fParamsArr)){
                         foreach($fParamsArr as $pname=>$pval){
                             if(!isset($fParams[$pname])){
-                                $fParams[$pname] = ((array)$pval)[0];
+                                $pmsall = (array)$pval;
+                                $fParams[$pname] = $pmsall[0];
                             }
                         }
                     }
