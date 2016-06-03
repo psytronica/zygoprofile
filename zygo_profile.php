@@ -380,6 +380,7 @@
                         $fParams['multiple'] = "true";                
                     case 'select':
                         $type='list';
+                        $fParams['type'] = "list";
                         break;
                     case 'date':
                         $type='calendar';
