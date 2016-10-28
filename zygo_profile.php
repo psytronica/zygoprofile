@@ -126,7 +126,7 @@ class plgUserZygo_profile extends JPlugin {
 
 		foreach ($results as $v) {
 			$k = str_replace('zygo_profile.', '', $v[0]);
-			if ($fNamesToTypes[$k] != 'textarea') {
+			if (isset($fNamesToTypes[$k]) && $fNamesToTypes[$k] != 'textarea') {
 				$v1arr = ($this->layout == 'edit')?explode("\n", $v[1]):str_replace("\n", ", ", $v[1]);
 			} else {
 				$v1arr = $v[1];
@@ -348,18 +348,20 @@ class plgUserZygo_profile extends JPlugin {
 				$fieldMessage      = (is_array($userinfo->fieldMessage))?$userinfo->fieldMessage[$fieldNum]:$userinfo->fieldMessage->$fieldNum;
 				$fieldDefaultValue = (is_array($userinfo->fieldDefaultValue))?$userinfo->fieldDefaultValue[$fieldNum]:$userinfo->fieldDefaultValue->$fieldNum;
 
-				$fieldUsergroups = "";
-				if (is_array($userinfo->fieldUsergroups) && isset($userinfo->fieldUsergroups[$fieldNum])) {
+				if (isset($userinfo->fieldUsergroups)) {
+					$fieldUsergroups = "";
+					if (is_array($userinfo->fieldUsergroups) && isset($userinfo->fieldUsergroups[$fieldNum])) {
 
-					$fieldUsergroups = $userinfo->fieldUsergroups[$fieldNum];
+						$fieldUsergroups = $userinfo->fieldUsergroups[$fieldNum];
 
-				} else if (is_object($userinfo->fieldUsergroups) && isset($userinfo->fieldUsergroups->$fieldNum)) {
+					} else if (is_object($userinfo->fieldUsergroups) && isset($userinfo->fieldUsergroups->$fieldNum)) {
 
-					$fieldUsergroups = $userinfo->fieldUsergroups->$fieldNum;
-				}
+						$fieldUsergroups = $userinfo->fieldUsergroups->$fieldNum;
+					}
 
-				if ($fieldUsergroups && !array_intersect($fieldUsergroups, $user->groups)) {
-					continue;
+					if ($fieldUsergroups && !array_intersect($fieldUsergroups, $user->groups)) {
+						continue;
+					}
 				}
 
 				$fParams = array(
