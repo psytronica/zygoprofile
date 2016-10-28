@@ -47,6 +47,15 @@
 				<field type="spacer" filter="raw" name="imgtextspacer" label="PLG_USER_ZYGO_PROFILE_DEFAULT_IMAGE_EDIT_TEXT" />
 
 				<field name="avatarfolder" type="folderlist" default="" label="PLG_USER_ZYGO_PROFILE_LABEL_AVATAR_DIR" description="PLG_USER_ZYGO_PROFILE_DESC_AVATAR_DIR" directory="media" filter="" exclude="" hide_none="1" stripext="" />
+
+                <field name="showdate" type="list" class="radio btn-group btn-group-yesno" 
+                    default="0" label="PLG_USER_ZYGO_PROFILE_LABEL_SHOWDATE" 
+                    description="PLG_USER_ZYGO_PROFILE_DESC_SHOWDATE">
+				  <option value="0">PLG_USER_ZYGO_PROFILE_SHOWDATE_JOOMLA</option>
+				  <option value="1">PLG_USER_ZYGO_PROFILE_SHOWDATE_HTML5</option>
+				</field>
+
+
  			</fieldset>	
  			<fieldset name="spamfilter">
 				<field name="spam" type="radio" class="radio btn-group btn-group-yesno" default="0" label="PLG_USER_ZYGO_PROFILE_LABEL_SPAMFILTER" description="PLG_USER_ZYGO_PROFILE_DESC_SPAMFILTER">

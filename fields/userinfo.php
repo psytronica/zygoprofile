@@ -1,56 +1,57 @@
 <?php
 
 /**
-* @id           $Id$
-* @author       Sherza (zygopterix@gmail.com)
-* @package      ZYGO Profile
-* @copyright    Copyright (C) 2015 Psytronica.ru. http://psytronica.ru  All rights reserved.
-* @license      GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
-*/
+ * @id           $Id$
+ * @author       Sherza (zygopterix@gmail.com)
+ * @package      ZYGO Profile
+ * @copyright    Copyright (C) 2015 Psytronica.ru. http://psytronica.ru  All rights reserved.
+ * @license      GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
+ */
 
 defined('JPATH_BASE') or die;
 
-class JFormFieldUserinfo extends JFormField
-{
+class JFormFieldUserinfo extends JFormField {
 
 	protected $type = 'userinfo';
 
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 
-		if(defined('ZE_USERINFO_JUST_ADDED')) return;
+		if (defined('ZE_USERINFO_JUST_ADDED')) {return;
+		}
+
 		define('ZE_USERINFO_JUST_ADDED', true);
 
 		$doc = JFactory::getDocument();
 		$doc->addStyleSheet(JURI::root().'plugins/user/zygo_profile/fields/userinfo.css');
 		$doc->addScript(JURI::root().'plugins/user/zygo_profile/fields/drag.js');
 		//$doc->addStyleSheet(JURI::root().'plugins/user/zygo_profile/fields/drag.css');
-		
-		$version = new JVersion();
-		$Jversion = (int)substr($version->getHelpVersion(),1);
-		$Jversion = (($Jversion>=30)? 30 : (($Jversion>=16)?  16 : 15));
+
+		$version  = new JVersion();
+		$Jversion = (int) substr($version->getHelpVersion(), 1);
+		$Jversion = (($Jversion >= 30)?30:(($Jversion >= 16)?16:15));
 
 		$disabled_options = $this->disabled_options();
-		$disabledJS=array();
-		foreach($disabled_options as $name=>$value){
-			if(is_string($value)){
-				$disabledJS[]=$name.': "'.$value.'"';
-			}else{
-				$disabledJSC=$name.': {';
-				foreach($value as $k=>$val){
-					if($k) $disabledJSC.=', ';
+		$disabledJS       = array();
+		foreach ($disabled_options as $name => $value) {
+			if (is_string($value)) {
+				$disabledJS[] = $name.': "'.$value.'"';
+			} else {
+				$disabledJSC = $name.': {';
+				foreach ($value as $k => $val) {
+					if ($k) {$disabledJSC .= ', ';
+					}
 
-					$disabledJSC.=$val.': true';
+					$disabledJSC .= $val.': true';
 				}
-				$disabledJSC.='}';
-				$disabledJS[]=$disabledJSC; 				
+				$disabledJSC .= '}';
+				$disabledJS[] = $disabledJSC;
 			}
 		}
-		$disabledJSString='var ZEdisabledJS = {'.implode(', ', $disabledJS).'}; ';
+		$disabledJSString = 'var ZEdisabledJS = {'.implode(', ', $disabledJS).'}; ';
 
-		$addSelectCorrection='';
-		if($Jversion == 30){
+		$addSelectCorrection = '';
+		if ($Jversion == 30) {
 			$addSelectCorrection = '
 
 				newTab.getElements("select").setStyles({"display":"block"});
@@ -62,7 +63,7 @@ class JFormFieldUserinfo extends JFormField
 					});';
 		}
 
-		$doc->addScriptDeclaration($disabledJSString. '
+		$doc->addScriptDeclaration($disabledJSString.'
 			window.addEvent("domready", function() {
 				prop={};
 
@@ -171,7 +172,8 @@ class JFormFieldUserinfo extends JFormField
 				labelTooltip2.store("tip:text", parts[1]);
 				new Tips(labelTooltip2, { maxTitleChars: 50, fixed: false});*/
 
-				ZE_NUM++; ZE_NUM_ALL[fieldname]=ZE_NUM;
+				ZE_NUM++;
+ ZE_NUM_ALL[fieldname]=ZE_NUM;
 
 				ZDragDrop.makeItemZDragable(newTab);
 
@@ -196,68 +198,65 @@ class JFormFieldUserinfo extends JFormField
 			}
 			function sh_addField(self, num, fieldname, name){
 
-				    wrapdiv=document.createElement("div"); 
-				    wrapdiv.innerHTML=\'<div><input type="text" name="jform[params][\'+fieldname+\'][\'+name+\'_value][\'+num+\'][]" value="" /><input type="text" name="jform[params][\'+fieldname+\'][\'+name+\'_text][\'+num+\'][]" value="" /><input type="button" class="button buttonminus btn btn-danger" onclick="this.parentNode.parentNode.removeChild(this.parentNode)" value="-"></div>\'; 
-				    document.getElementById("shfield_multitext_wrapper_jform_params_"+fieldname+name+num).appendChild(wrapdiv); 
+				    wrapdiv=document.createElement("div");
+				    wrapdiv.innerHTML=\'<div><input type="text" name="jform[params][\'+fieldname+\'][\'+name+\'_value][\'+num+\'][]" value="" /><input type="text" name="jform[params][\'+fieldname+\'][\'+name+\'_text][\'+num+\'][]" value="" /><input type="button" class="button buttonminus btn btn-danger" onclick="this.parentNode.parentNode.removeChild(this.parentNode)" value="-"></div>\';
+				    document.getElementById("shfield_multitext_wrapper_jform_params_"+fieldname+name+num).appendChild(wrapdiv);
 			}
 			function zeShowHideSelectOptions(self, num, fieldname, name){
-				document.getElementById("zeLiParam"+fieldname+"fieldOptions"+num).style.display = 
-				(self.value=="select" || self.value=="multiselect" || self.value=="radio" || self.value=="checkbox") ? "block" : "none"; 
+				document.getElementById("zeLiParam"+fieldname+"fieldOptions"+num).style.display =
+				(self.value=="select" || self.value=="multiselect" || self.value=="radio" || self.value=="checkbox") ? "block" : "none";
 			}
 		');
 
 	}
-	protected function getLabel()
-	{
+	protected function getLabel() {
 		return '';
 	}
 
-	protected function disabled_options(){
+	protected function disabled_options() {
 
-		$disabled_options=array(
-			'yandex_font_size'=>'fixed',
-			'yandex_font_family'=>'fixed',
-			'yandex_direct_border_type'=>'fixed',
-			'yandex_direct_header_position'=>array('vertical', 'horizontal', 'flat'),
-			'yandex_direct_border_type'=>'fixed'
+		$disabled_options = array(
+			'yandex_font_size'              => 'fixed',
+			'yandex_font_family'            => 'fixed',
+			'yandex_direct_border_type'     => 'fixed',
+			'yandex_direct_header_position' => array('vertical', 'horizontal', 'flat'),
+			'yandex_direct_border_type'     => 'fixed'
 		);
 		return $disabled_options;
 	}
 
-	protected function getInput()
-	{
+	protected function getInput() {
 
-		if(!empty($this->value['fieldName'])){
-			
-			$codeKeys=array();
-			$count=0;
-			foreach($this->value['fieldName'] as $key=>$codeVal){
-				$codeKeys[$key]=$count;
+		if (!empty($this->value['fieldName'])) {
+
+			$codeKeys = array();
+			$count    = 0;
+			foreach ($this->value['fieldName'] as $key => $codeVal) {
+				$codeKeys[$key] = $count;
 				$count++;
 			}
 
-			$newValue=array();
-			foreach($this->value as $vtypeName=>$vtype){
-				if(!empty($vtype)){
-					if(is_string($vtype)){
-						$newValue[$vtypeName]=$vtype;
-					}else{
-						$newValue[$vtypeName]=array();
-						foreach($vtype as $valName=>$val){
-							if(!is_array($val) && !is_object($val)){
-								$newValue[$vtypeName][$valName]=$val;
-							}else{
-								$newValue[$vtypeName][$valName]=array();
-								foreach($val as $vc=>$v){
+			$newValue = array();
+			foreach ($this->value as $vtypeName => $vtype) {
+				if (!empty($vtype)) {
+					if (is_string($vtype)) {
+						$newValue[$vtypeName] = $vtype;
+					} else {
+						$newValue[$vtypeName] = array();
+						foreach ($vtype as $valName => $val) {
+							if (!is_array($val) && !is_object($val)) {
+								$newValue[$vtypeName][$valName] = $val;
+							} else {
+								$newValue[$vtypeName][$valName] = array();
+								foreach ($val as $vc => $v) {
 									//$newValue[$vtypeName][$valName][$codeKeys[$vc]]=$v;
-									$newValue[$vtypeName][$valName][]=$v;
+									$newValue[$vtypeName][$valName][] = $v;
 								}
 							}
 						}
 					}
 				}
 			}
-
 
 			$this->value = $newValue;
 
@@ -268,212 +267,225 @@ class JFormFieldUserinfo extends JFormField
 		$doc = JFactory::getDocument();
 
 		//$CountAll=(isset($this->value['fieldName']))? sizeof($this->value['fieldName']) : 1;
-		$lastValue=(!empty($codeKeys))? (max(array_keys($codeKeys))+1) : 1;
+		$lastValue = (!empty($codeKeys))?(max(array_keys($codeKeys))+1):1;
 		$doc->addScriptDeclaration('
 			ZE_NUM_ALL["'.$this->fieldname.'"] = '.$lastValue.';
 		');
 
-		$html='<div style="clear:both"></div>';
+		$html = '<div style="clear:both"></div>';
 
-		$html.='<div class="userinfo_wrapper" id="userinfo_wrapper_'.$this->fieldname.'">';
+		$html .= '<div class="userinfo_wrapper" id="userinfo_wrapper_'.$this->fieldname.'">';
 
-		$label = $this->element['label'] ? (string) $this->element['label'] : (string) $this->element['name'];
+		$label = $this->element['label']?(string) $this->element['label']:(string) $this->element['name'];
 
-		$html.='<div class="userinfo_head" id="userinfo_head_'.$this->fieldname.'">';
-		$html.=JText::_($label).':<a href="javascript:void(null)" onclick="zeAddNew(\''.$this->fieldname.'\')">'.JText::_('PLG_USER_ZYGO_PROFILE_ADD_NEW_FIELD').'</a>';
-		$html.='</div><ul id="userinfo_tab_ul_'.$this->fieldname.'" class="sortable">';
+		$html .= '<div class="userinfo_head" id="userinfo_head_'.$this->fieldname.'">';
+		$html .= JText::_($label).':<a href="javascript:void(null)" onclick="zeAddNew(\''.$this->fieldname.'\')">'.JText::_('PLG_USER_ZYGO_PROFILE_ADD_NEW_FIELD').'</a>';
+		$html .= '</div><ul id="userinfo_tab_ul_'.$this->fieldname.'" class="sortable">';
 
+		$activeTabVal = (isset($this->value['activeTab']) && $this->value['activeTab'])?$this->value['activeTab']:'';
 
-		$activeTabVal=(isset($this->value['activeTab']) && $this->value['activeTab'])? $this->value['activeTab'] : '';
-
-		if(!isset($this->value['code'][0])) $this->value['code'][0]=true;
+		if (!isset($this->value['code'][0])) {$this->value['code'][0] = true;
+		}
 
 		/*$FieldNamesNums=array();
 		foreach($this->value['code'] as $num=>$codeUniqueID){
-			$valueFieldName=($num>0 && isset($this->value['fieldName'][$num]))? $this->value['fieldName'][$num] : '';
-			if($valueFieldName) $FieldNamesNums[$valueFieldName] = $num;
+		$valueFieldName=($num>0 && isset($this->value['fieldName'][$num]))? $this->value['fieldName'][$num] : '';
+		if($valueFieldName) $FieldNamesNums[$valueFieldName] = $num;
 		}*/
 
-		foreach($this->value['code'] as $num=>$codeUniqueID){
+		foreach ($this->value['code'] as $num => $codeUniqueID) {
 			//$params=$this->getParams($num);
 
-			$html.='<li class="userinfo_tab userinfo_tab_'.$num.'" id="userinfo_tab_'.$this->fieldname.'_'.$num.'">';
+			$html .= '<li class="userinfo_tab userinfo_tab_'.$num.'" id="userinfo_tab_'.$this->fieldname.'_'.$num.'">';
 
-			$html.='<div onclick="zeOpenClose(event, this.parentNode)" class="userinfo_tab_head">';
+			$html .= '<div onclick="zeOpenClose(event, this.parentNode)" class="userinfo_tab_head">';
 
 			/* @TODO: turn on-off fields */
 
-			$uniqueIDVal=($num>0 && isset($this->value['code'][$num]) && $this->value['code'][$num])? $this->value['code'][$num] : JText::_('PLG_USER_ZYGO_PROFILE_ADD_NEW_FIELD').$num;
+			$uniqueIDVal = ($num > 0 && isset($this->value['code'][$num]) && $this->value['code'][$num])?$this->value['code'][$num]:JText::_('PLG_USER_ZYGO_PROFILE_ADD_NEW_FIELD').$num;
 
-			$labelClass=($num)? ' class="hasTooltip hasTip" ' : '';
-			$html.='<span class="zeFieldLabel">
-					<input type="text" name="jform[params]['.$this->fieldname.'][code]['.$num.']" 
-						class="zeUniqueIdClass" id="jform_params_'.$this->fieldname.'code'.$num.'" 
-						rel="code" value="'.$uniqueIDVal.'"/> 
-					<span '.$labelClass.' id="zeUniqueIdLabel'.$this->fieldname.$num.'" 
+			$labelClass = ($num)?' class="hasTooltip hasTip" ':'';
+			$html .= '<span class="zeFieldLabel">
+					<input type="text" name="jform[params]['.$this->fieldname.'][code]['.$num.']"
+						class="zeUniqueIdClass" id="jform_params_'.$this->fieldname.'code'.$num.'"
+						rel="code" value="'.$uniqueIDVal.'"/>
+					<span '.$labelClass.' id="zeUniqueIdLabel'.$this->fieldname.$num.'"
 					title="'.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDLABEL').'::'.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDLABEL_DESCRIPTION').'">'.
-						JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDLABEL').'
+			JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDLABEL').'
 					</span> <span class="zygoid_wrapper">ID = <span class="zygoid">'.$num.'</span></span>
 				</span>';
 
+			$html .= '<span class="zeOpenCloseSpan"></span>';
 
-			$html.='<span class="zeOpenCloseSpan"></span>';
+			$html .= '<span onclick="zeRemove(this)" class="zeRemoveSpan"></span>';
 
+			$html .= '</div>';
 
-			$html.='<span onclick="zeRemove(this)" class="zeRemoveSpan"></span>';
+			$html .= '<div class="userinfo_tab_content"><ul class="userinfo_ul">';
 
-			$html.='</div>';
-
-			$html.='<div class="userinfo_tab_content"><ul class="userinfo_ul">';
-
-			$params = array();
+			$params   = array();
 			$params[] = array(
-				'name' => 'fieldName',
+				'name'  => 'fieldName',
 				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDNAME'),
-				'type' => 'input'
+				'type'  => 'input',
 			);
 			$params[] = array(
-				'name' => 'fieldDescription',
+				'name'  => 'fieldDescription',
 				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDDESCRIPTION'),
-				'type' => 'input'
+				'type'  => 'input',
 			);
 			$params[] = array(
-				'name' => 'fieldMessage',
+				'name'  => 'fieldMessage',
 				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDMESSAGE'),
-				'type' => 'input'
+				'type'  => 'input',
 			);
 			$params[] = array(
-				'name' => 'fieldType',
-				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDTYPE'),
-				'type' => 'list',
-				'options'=>array('text'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_TEXT'), 
-					'textarea'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_TEXTAREA'), 
-					'select'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_SELECT'), 
-					'multiselect'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_MULTISELECT'), 
-					'radio'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_RADIO'), 
-					'date'=> JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DATE'),
-					'avatar'=> JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_AVATAR'))
+				'name'         => 'fieldType',
+				'label'        => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDTYPE'),
+				'type'         => 'list',
+				'options'      => array('text'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_TEXT'),
+					'textarea'    => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_TEXTAREA'),
+					'select'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_SELECT'),
+					'multiselect' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_MULTISELECT'),
+					'radio'       => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_RADIO'),
+					'date'        => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DATE'),
+					'avatar'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_AVATAR'))
 			);
 			$params[] = array(
-				'name' => 'fieldOptions',
+				'name'  => 'fieldOptions',
 				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDLOPTIONS'),
-				'type' => 'multitext'
+				'type'  => 'multitext',
 			);
 			$params[] = array(
-				'name' => 'fieldFilter',
-				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDFILTER'),
-				'type' => 'list',
-				'options'=>array(''=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_NOFILTER'), 'safehtml'=>'SafeHtml', 'string'=>'String', 'raw'=>'Raw')
+				'name'    => 'fieldFilter',
+				'label'   => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDFILTER'),
+				'type'    => 'list',
+				'options' => array('' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_NOFILTER'), 'safehtml' => 'SafeHtml', 'string' => 'String', 'raw' => 'Raw')
 			);
 			$params[] = array(
-				'name' => 'fieldParams',
+				'name'  => 'fieldParams',
 				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDPARAMS'),
-				'type' => 'textarea'
+				'type'  => 'textarea',
 			);
 			$params[] = array(
-				'name' => 'fieldDefaultValue',
+				'name'  => 'fieldDefaultValue',
 				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDDEFAULTVALUE'),
-				'type' => 'input'
+				'type'  => 'input',
 			);
 			$params[] = array(
-				'name' => 'fieldRequiredProfile',
-				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDREQUIREDPROFILE'),
-				'type' => 'list',
-				'options'=>array(
-					'2'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_REQUIRED'), 
-					'1'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_OPTIONAL'), 
-					'0'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DISABLED'))
+				'name'    => 'fieldRequiredProfile',
+				'label'   => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDREQUIREDPROFILE'),
+				'type'    => 'list',
+				'options' => array(
+					'2'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_REQUIRED'),
+					'1'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_OPTIONAL'),
+					'0'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DISABLED'))
 			);
 			$params[] = array(
-				'name' => 'fieldRequiredRegistration',
-				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDREQUIREDREGISTRATION'),
-				'type' => 'list',
-				'options'=>array(
-					'2'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_REQUIRED'), 
-					'1'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_OPTIONAL'), 
-					'0'=>JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DISABLED'))
+				'name'    => 'fieldRequiredRegistration',
+				'label'   => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDREQUIREDREGISTRATION'),
+				'type'    => 'list',
+				'options' => array(
+					'2'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_REQUIRED'),
+					'1'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_OPTIONAL'),
+					'0'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DISABLED'))
 			);
+			$params[] = array(
+				'name'  => 'fieldUsergroups',
+				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDUSERGROUPS'),
+				'type'  => 'usergroup',
+			);
+
 			/*$params[] = array(
-				'name' => 'fieldOrdering',
-				'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDORDERING'),
-				'type' => 'hidden'
+			'name' => 'fieldOrdering',
+			'label' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDORDERING'),
+			'type' => 'hidden'
 			);*/
 
-			$fieldTypeValue='';
-			$showOptionsVariants=array('select', 'multiselect', 'radio');
-			foreach($params as $param){
-	
-				$value=($num>0 && isset($this->value[$param['name']][$num]))? $this->value[$param['name']][$num] : '';
-	
-				$thisHidden = ($param['type']=='hidden'|| ($param['type']=='multitext' && !in_array($fieldTypeValue, $showOptionsVariants)) )? 'style="display:none"': '';
+			$fieldTypeValue      = '';
+			$showOptionsVariants = array('select', 'multiselect', 'radio');
+			foreach ($params as $param) {
 
-				$html.='<li class="zeLiParam'.$this->fieldname.$param['name'].'" id="zeLiParam'.$this->fieldname.$param['name'].$num.'" '.$thisHidden.'>'.$param['label'];
+				$value = ($num > 0 && isset($this->value[$param['name']][$num]))?$this->value[$param['name']][$num]:'';
 
-				switch($param['type']){
+				$thisHidden = ($param['type'] == 'hidden' || ($param['type'] == 'multitext' && !in_array($fieldTypeValue, $showOptionsVariants)))?'style="display:none"':'';
+
+				$html .= '<li class="zeLiParam'.$this->fieldname.$param['name'].'" id="zeLiParam'.$this->fieldname.$param['name'].$num.'" '.$thisHidden.'>'.$param['label'];
+
+				switch ($param['type']) {
 
 					case 'list':
 						$options = array();
-						foreach($param['options'] as $optionVal=>$optionLabel){
-							$options[] = JHtml::_( 'select.option', $optionVal, $optionLabel);
+						foreach ($param['options'] as $optionVal => $optionLabel) {
+							$options[] = JHtml::_('select.option', $optionVal, $optionLabel);
 						}
-						$onchange='';
-						if($param['name']=='fieldType'){
-							$onchange=' onchange="zeShowHideSelectOptions(this, \''.$num.'\', \''.$this->fieldname.'\', \''.$param['name'].'\')"; ';
-							$fieldTypeValue=$value;
+						$onchange = '';
+						if ($param['name'] == 'fieldType') {
+							$onchange       = ' onchange="zeShowHideSelectOptions(this, \''.$num.'\', \''.$this->fieldname.'\', \''.$param['name'].'\')"; ';
+							$fieldTypeValue = $value;
 						}
-						$html.= JHTML::_('select.genericlist', $options, 'jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']', 'class = "zeinputbox"'.$onchange, 'value', 'text', $value );
+						$html .= JHTML::_('select.genericlist', $options, 'jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']', 'class = "zeinputbox"'.$onchange, 'value', 'text', $value);
 
-					break;
+						break;
 					case 'textarea':
 
-						$html.='<textarea type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']" id="jform_params_'.$this->fieldname.$param['name'].$num.'" rel="'.$param['name'].'" value="'.$value.'" class = "zeinputbox" />'.$value.'</textarea>';
-					break;
+						$html .= '<textarea type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']" id="jform_params_'.$this->fieldname.$param['name'].$num.'" rel="'.$param['name'].'" value="'.$value.'" class = "zeinputbox" />'.$value.'</textarea>';
+						break;
 
 					case 'multitext':
 
-						$value_value=($num>0 && isset($this->value[$param['name'].'_value'][$num]))? $this->value[$param['name'].'_value'][$num] : '';
-						$value_text=($num>0 && isset($this->value[$param['name'].'_text'][$num]))? $this->value[$param['name'].'_text'][$num] : '';
+						$value_value = ($num > 0 && isset($this->value[$param['name'].'_value'][$num]))?$this->value[$param['name'].'_value'][$num]:'';
+						$value_text  = ($num > 0 && isset($this->value[$param['name'].'_text'][$num]))?$this->value[$param['name'].'_text'][$num]:'';
 
-						$fid = 'jform_params_'.$this->fieldname.$param['name'].$num;
-						$multitext='<div id="shfield_multitext_wrapper_'.$fid.'" class="shfield_multitext_wrapper">
-								
-							      <input type="button" class="button buttonplus btn btn-success" 
-								onclick="sh_addField(this, \''.$num.'\', \''.$this->fieldname.'\', \''.$param['name'].'\')" value="+ '.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_ADDFIELD').'">
+						$fid       = 'jform_params_'.$this->fieldname.$param['name'].$num;
+						$multitext = '<div id="shfield_multitext_wrapper_'.$fid.'" class="shfield_multitext_wrapper">
 
-								<div class="zeLabelsOpts4Sels"><input readonly="readonly" value="'.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_FIELDVALUE').'"><input readonly="readonly" value="'.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_FIELDTEXT').'"></div>';
-						if(!empty($value_value)){
-						    foreach($value_value as $valNum=>$val){
-						      $multitext.='<div><input type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].'_value]['.$num.'][]" value="'.$val.'" /><input type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].'_text]['.$num.'][]" value="'.$value_text[$valNum].'" /><input type="button" class="button buttonminus btn btn-danger" onclick="this.parentNode.parentNode.removeChild(this.parentNode)" value="-"></div>';
-						    }
-						}	
-						$multitext.='</div>';
-						$html.=$multitext;
-					break;
+							      <input type="button" class="button buttonplus btn btn-success"
+								onclick="sh_addField(this, \''	.$num.'\', \''.$this->fieldname.'\', \''.$param['name'].'\')" value="+ '.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_ADDFIELD').'">
+
+								<div class="zeLabelsOpts4Sels"><input readonly="readonly" value="'	.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_FIELDVALUE').'"><input readonly="readonly" value="'.JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_FIELDTEXT').'"></div>';
+						if (!empty($value_value)) {
+							foreach ($value_value as $valNum => $val) {
+								$multitext .= '<div><input type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].'_value]['.$num.'][]" value="'.$val.'" /><input type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].'_text]['.$num.'][]" value="'.$value_text[$valNum].'" /><input type="button" class="button buttonminus btn btn-danger" onclick="this.parentNode.parentNode.removeChild(this.parentNode)" value="-"></div>';
+							}
+						}
+						$multitext .= '</div>';
+						$html .= $multitext;
+						break;
+					case 'usergroup':
+						$name = 'jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.'][]';
+						$id   = '"jform_params_'.$this->fieldname.$param['name'].$num.'"';
+
+						//usergroup($name, $selected, $attribs = '', $allowAll = true, $id = false)
+						$html .= JHtml::_('access.usergroup', $name, $value, 'multiple="true"', false, $id);
+						break;
 					case 'input':
 					case 'hidden':
 					default:
 
-						if($param['name'] == 'fieldName' && !$value) $value='uniqueID'.$num;
-						$html.='<input type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']" id="jform_params_'.$this->fieldname.$param['name'].$num.'" rel="'.$param['name'].'" value="'.$value.'" class = "jform_params_'.$this->fieldname.$param['name'].' zeinputbox" />';
-					break;
-				}			
-			
-				$html.='<div style="clear:both"></div>
+						if ($param['name'] == 'fieldName' && !$value) {$value = 'uniqueID'.$num;
+						}
+
+						$html .= '<input type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']" id="jform_params_'.$this->fieldname.$param['name'].$num.'" rel="'.$param['name'].'" value="'.$value.'" class = "jform_params_'.$this->fieldname.$param['name'].' zeinputbox" />';
+						break;
+				}
+
+				$html .= '<div style="clear:both"></div>
 				</li>';
 
 			}
 
-			$html.='</ul></div>';
+			$html .= '</ul></div>';
 
-			$html.='</li>';
+			$html .= '</li>';
 
 		}
-		$html.='<li></div>';
+		$html .= '<li></div>';
 
 		//$html.='<input type="hidden" name="jform[params]['.$this->fieldname.'][activeTab]" id="jform_params_'.$this->fieldname.'activeTab" rel="activeTab" value="'.$activeTabVal.'"/>';
 
-		$orderingVal=(isset($this->value['ordering']) && $this->value['ordering'])? $this->value['ordering'] : '';
-		$html.='<input type="hidden" name="jform[params]['.$this->fieldname.'][ordering]" id="jform_params_'.$this->fieldname.'ordering" rel="ordering" value="'.$orderingVal.'"/>';
+		$orderingVal = (isset($this->value['ordering']) && $this->value['ordering'])?$this->value['ordering']:'';
+		$html .= '<input type="hidden" name="jform[params]['.$this->fieldname.'][ordering]" id="jform_params_'.$this->fieldname.'ordering" rel="ordering" value="'.$orderingVal.'"/>';
 
 		return $html;
 	}
