@@ -265,6 +265,16 @@ class plgUserZygo_profile extends JPlugin {
 					$form->removeField($fname, 'zygo_profile');
 				}
 
+				$type        = (is_array($userinfo->fieldType))?$userinfo->fieldType[$fieldNum]:$userinfo->fieldType->$fieldNum;
+                
+                if($type=="html"){
+                    
+                    $fieldParams = (is_array($userinfo->fieldParams))?
+                            $userinfo->fieldParams[$fieldNum] : $userinfo->fieldParams->$fieldNum;
+                    
+                    $form->setFieldAttribute($fname, 'html', $fieldParams, 'zygo_profile');
+                }                
+                
 			}
 		}
 
@@ -287,7 +297,16 @@ class plgUserZygo_profile extends JPlugin {
 				} else {
 					$form->removeField($fname, 'zygo_profile');
 				}
-
+                
+				$type        = (is_array($userinfo->fieldType))?$userinfo->fieldType[$fieldNum]:$userinfo->fieldType->$fieldNum;
+                
+                if($type=="html"){
+                    
+                    $fieldParams = (is_array($userinfo->fieldParams))?
+                            $userinfo->fieldParams[$fieldNum] : $userinfo->fieldParams->$fieldNum;
+                    
+                    $form->setFieldAttribute($fname, 'html', $fieldParams, 'zygo_profile');
+                }
 			}
 		}
 	}
@@ -332,7 +351,7 @@ class plgUserZygo_profile extends JPlugin {
         <fieldset name="zygo_profile" addfieldpath="/plugins/user/zygo_profile/fields"
             label="PLG_USER_zygo_profile_SLIDER_LABEL"
         >';
-		$showOptionsVariants = array('list', 'radio');
+		$showOptionsVariants = array('list', 'radio', 'checkboxes');
 
 		$userId = isset($data->id)?$data->id:0;
 		$user   = JFactory::getUser($userId);
@@ -388,6 +407,9 @@ class plgUserZygo_profile extends JPlugin {
 						$type            = 'list';
 						$fParams['type'] = "list";
 						break;
+					case 'html':
+						$fieldParams = "";
+						break;                    
 					case 'date':
 						if (!$this->params->get('showdate', 0)) {
 							$type            = 'calendar';

@@ -204,7 +204,16 @@ class JFormFieldUserinfo extends JFormField {
 			}
 			function zeShowHideSelectOptions(self, num, fieldname, name){
 				document.getElementById("zeLiParam"+fieldname+"fieldOptions"+num).style.display =
-				(self.value=="select" || self.value=="multiselect" || self.value=="radio" || self.value=="checkbox") ? "block" : "none";
+				(self.value=="select" || self.value=="multiselect" || self.value=="radio" || self.value=="checkboxes") ? "block" : "none";
+                
+                var fdv = document.getElementById("zeLiParam"+fieldname+"fieldDefaultValue"+num);
+
+				fdv.style.display = (self.value!="html") ? "block" : "none";
+
+				document.getElementById("zeLilabel"+fieldname+"fieldParams"+num).innerHTML =
+				(fdv.value!="html") ? "'.JText::_("PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDPARAMS_HTML")
+                    .'" : "'.JText::_("PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDPARAMS").'";
+
 			}
 		');
 
@@ -349,7 +358,10 @@ class JFormFieldUserinfo extends JFormField {
 					'multiselect' => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_MULTISELECT'),
 					'radio'       => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_RADIO'),
 					'date'        => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_DATE'),
-					'avatar'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_AVATAR'))
+					'avatar'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_AVATAR'),
+                    'checkbox'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_CHECKBOX'),
+                    'checkboxes'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_CHECKBOXES'),
+                    'html'      => JText::_('PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELD_OPTION_HTML'))
 			);
 			$params[] = array(
 				'name'  => 'fieldOptions',
@@ -403,14 +415,24 @@ class JFormFieldUserinfo extends JFormField {
 			);*/
 
 			$fieldTypeValue      = '';
-			$showOptionsVariants = array('select', 'multiselect', 'radio');
+			$showOptionsVariants = array('select', 'multiselect', 'radio', 'checkboxes');
 			foreach ($params as $param) {
 
 				$value = ($num > 0 && isset($this->value[$param['name']][$num]))?$this->value[$param['name']][$num]:'';
 
-				$thisHidden = ($param['type'] == 'hidden' || ($param['type'] == 'multitext' && !in_array($fieldTypeValue, $showOptionsVariants)))?'style="display:none"':'';
+				$thisHidden = ($param['type'] == 'hidden' || ($param['type'] == 'multitext' && !in_array($fieldTypeValue, $showOptionsVariants)))?
+                            'style="display:none"':'';
 
-				$html .= '<li class="zeLiParam'.$this->fieldname.$param['name'].'" id="zeLiParam'.$this->fieldname.$param['name'].$num.'" '.$thisHidden.'>'.$param['label'];
+                if( $fieldTypeValue=="html" && $param['name'] == "fieldDefaultValue" ){
+                    $thisHidden = 'style="display:none"';
+                }
+                
+                if( $fieldTypeValue=="html" && $param['name'] == "fieldParams" ){
+                    $param['label'] = JText::_("PLG_USER_ZYGO_PROFILE_FIELDGROUP_FIELDPARAMS_HTML");
+                }              
+                
+				$html .= '<li class="zeLiParam'.$this->fieldname.$param['name'].'" id="zeLiParam'.$this->fieldname.$param['name'].$num.'" '
+                        .$thisHidden.'><span id="zeLilabel'.$this->fieldname.$param['name'].$num.'">'.$param['label']."</span>";
 
 				switch ($param['type']) {
 
