@@ -451,7 +451,8 @@ class JFormFieldUserinfo extends JFormField {
 						break;
 					case 'textarea':
 
-						$html .= '<textarea type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']" id="jform_params_'.$this->fieldname.$param['name'].$num.'" rel="'.$param['name'].'" value="'.$value.'" class = "zeinputbox" />'.$value.'</textarea>';
+						$html .= '<textarea type="text" name="jform[params]['.$this->fieldname.']['.$param['name'].']['.$num.']" id="jform_params_'.$this->fieldname.$param['name'].$num.'" rel="'.$param['name'].
+                            '" value="'.  htmlspecialchars( $value).'" class = "zeinputbox" />'.$value.'</textarea>';
 						break;
 
 					case 'multitext':
