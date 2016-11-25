@@ -9,6 +9,33 @@
 */
 
  defined('JPATH_BASE') or die;
+ 
+ 
+$app = JFactory::getApplication();
+$user = JFactory::getUser();
+
+$avatar = $app->input->get('avatar', "", "raw");
+
+if(!$app->isAdmin()){
+    
+    $avarr = explode("/", $avatar);
+    
+    $usid = 0;
+    foreach($avarr as $k => $seg){
+        if($seg == "plg_zygo_profile" && ($k+1 < sizeof($avarr)) 
+                && is_numeric($avarr[$k+1])){
+            
+           $usid = (int)$avarr[$k+1];
+        }
+    }
+    
+	$canEdit = $user->authorise('core.edit', 'com_users');
+    if($user->id!=$usid && !$canEdit){
+      echo "ACCESS DENIED";
+      $app->close();
+    } 
+}
+
 
 $plugin = JPluginHelper::getPlugin('user', 'zygo_profile');
 $pluginParams = new JRegistry();
@@ -28,7 +55,6 @@ var ZE_THUMB_WIDTH = '.$thumb_width.';
 var ZE_THUMB_HEIGHT = '.$thumb_height.';
 ';
 
-$avatar = JRequest::getVar('avatar');
 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">

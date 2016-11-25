@@ -113,6 +113,7 @@ class plgUserZygo_profile extends JPlugin {
 		$fNamesToTypes  = array();
 		$fields_avatars = array();
 
+        
 		foreach ($userinfo->fieldName as $fieldNum => $fname) {
 			if (is_array($userinfo->fieldType)) {
 				$fNamesToTypes[$fname] = $userinfo->fieldType[$fieldNum];
@@ -122,6 +123,22 @@ class plgUserZygo_profile extends JPlugin {
 
 			if ($fNamesToTypes[$fname] == "avatar") {$fields_avatars[] = $fname;
 			}
+            
+            if($fNamesToTypes[$fname] == "html"){
+                
+                if (is_array($userinfo->fieldParams)) {
+                    $fieldParams = $userinfo->fieldParams[$fieldNum];
+                } else {
+                    $fieldParams = $userinfo->fieldParams->$fieldNum;
+                }                
+                
+                if (is_array($data)) {
+                    $data['zygo_profile'][$fname] = $fieldParams;
+                } else {
+                    $data->zygo_profile[$fname] = $fieldParams;
+                }   
+                JHtml::register('users.'.$fname, array('plgUserZygo_profile', 'textInProfile'));
+            }
 		}
 
 		foreach ($results as $v) {
@@ -142,15 +159,23 @@ class plgUserZygo_profile extends JPlugin {
 				} else {
 					JHtml::register('users.'.$k, array('plgUserZygo_profile', 'textInProfile'));
 				}
+                
+                if (isset($fNamesToTypes[$k]) && $fNamesToTypes[$k] == 'checkbox'){
+                    $v[1] = ((int)$v[1])? JText::_("JYES") : JText::_("JNO");                  
+                }
 			}
+            
 
 			if (is_array($data)) {
 				$data['zygo_profile'][$k] = (!empty($v1arr) && isset($v1arr[1]))?$v1arr:$v[1];
 			} else {
 				$data->zygo_profile[$k] = (!empty($v1arr) && isset($v1arr[1]))?$v1arr:$v[1];
 			}
+            
 
 		}
+        
+        
 		return true;
 	}
 	/**
@@ -186,6 +211,7 @@ class plgUserZygo_profile extends JPlugin {
 		}
 		return $v1arr;
 	}
+    
 	/**
 	 * Process the rest of fields from plugin settings to show them in
 	 * user extended profile (not in registration/change user data form)
