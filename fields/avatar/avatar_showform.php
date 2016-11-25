@@ -18,15 +18,20 @@ $avatar = $app->input->get('avatar', "", "raw");
 
 if(!$app->isAdmin()){
     
-    $avarr = explode("/", $avatar);
-    
     $usid = 0;
-    foreach($avarr as $k => $seg){
-        if($seg == "plg_zygo_profile" && ($k+1 < sizeof($avarr)) 
-                && is_numeric($avarr[$k+1])){
-            
-           $usid = (int)$avarr[$k+1];
+    if($avatar){
+    
+        $avarr = explode("/", $avatar);
+
+        foreach($avarr as $k => $seg){
+            if($seg == "plg_zygo_profile" && ($k+1 < sizeof($avarr)) 
+                    && is_numeric($avarr[$k+1])){
+
+               $usid = (int)$avarr[$k+1];
+            }
         }
+    }else if($app->input->getInt('id')){
+        $usid = $app->input->getInt('id');
     }
     
 	$canEdit = $user->authorise('core.edit', 'com_users');
