@@ -76,7 +76,8 @@ if(!is_dir($upload_dir)) mkdir($upload_dir);
 $upload_path = $upload_dir."/";				// The path to where the image will be saved
 $large_image_name = "tmp_large".$randval;     // New name of the large image (append the timestamp to the filename)
 $thumb_image_name = "tmp_thumb".$randval;     // New name of the thumbnail image (append the timestamp to the filename)
-$max_file = "10"; 							// Maximum file size in MB
+// docenttmp
+$max_file = $pluginParams->get('max_file', 2); 							// Maximum file size in MB
 $max_width = $pluginParams->get('max_width', 500);							// Max width allowed for the large image
 $thumb_width = $pluginParams->get('thumb_width', 100);
 $thumb_height = $pluginParams->get('thumb_height', 100);
