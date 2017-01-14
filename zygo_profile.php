@@ -274,7 +274,7 @@ class plgUserZygo_profile extends JPlugin {
 		if (!in_array($form->getName(), array('com_users.profile', 'com_users.registration', 'com_users.user', 'com_admin.profile'))) {
 			return true;
 		}
-		if ($form->getName() == 'com_users.profile') {
+		if ($form->getName() == 'com_users.profile' || $form->getName() == 'com_users.user'){
 
 			$formXMLGen = $this->getUserdataParams($data);
 			$form->load($formXMLGen);
@@ -305,7 +305,7 @@ class plgUserZygo_profile extends JPlugin {
 		}
 
 		//In this example, we treat the frontend registration and the back end user create or edit as the same.
-		 elseif ($form->getName() == 'com_users.registration' || $form->getName() == 'com_users.user') {
+		 elseif ($form->getName() == 'com_users.registration') {
 
 			$formXMLGen = $this->getUserdataParams($data);
 			$form->load($formXMLGen);
@@ -597,11 +597,7 @@ class plgUserZygo_profile extends JPlugin {
 						}
 					} else if (isset($v['avatar'])) {
 
-						$avFolder = JPATH_ROOT."/media";
-						if ($this->params->get('avatarfolder')) {$avFolder .= "/".$this->params->get('avatarfolder');
-						}
-
-						$avFolder .= "/plg_zygo_profile/".$userId;
+						$avFolder = JPATH_ROOT."/".$this->params->get('avatarfolder').'/'.$userId;
 
 						$files = scandir($avFolder);
 						foreach ($files as $file) {

@@ -33,23 +33,18 @@
 				/>
 			</fieldset>
  			<fieldset name="advanced">
- 				<field name="thumb_width" type="text"
-					label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_WIDTH" default="100"
-				/>
- 				<field name="thumb_height" type="text"
-					label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_HEIGHT" default="100"
-				/>
-				<field name="max_width" type="text"
-					label="PLG_USER_ZYGO_PROFILE_LABEL_LARGE_WIDTH" default="500"
-				/>
-				<field name="max_file" type="text"
-   					label="PLG_USER_ZYGO_PROFILE_LABEL_MAX_FILE" default="2"
-   				/>
+ 				<field name="thumb_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_WIDTH" default="100" filter="uint" maxlength="3"/>
+                                <field name="thumb_height" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_HEIGHT" default="100" filter="uint" maxlength="3"/>
+                                <field name="max_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_LARGE_WIDTH" default="500" filter="uint" maxlength="3"/>
+				<field name="max_file" type="text" label="PLG_USER_ZYGO_PROFILE_MAX_FILE_LABEL" default="2" filter="uint" maxlength="2"/>
+                                
+                                <field name="allowed_image_types" type="text" default="bmp,gif,jpg,png" label="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_LABEL" description="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_DESC"/>
+                                
 				<field name="noavatar" type="media" label="PLG_USER_ZYGO_PROFILE_LABEL_NOAVATAR" />
 				<field name="texthelp" filter='raw' type="textarea" label="PLG_USER_ZYGO_PROFILE_LABEL_IMAGE_EDIT_TEXT" default="" />
 				<field type="spacer" filter="raw" name="imgtextspacer" label="PLG_USER_ZYGO_PROFILE_DEFAULT_IMAGE_EDIT_TEXT" />
 
-				<field name="avatarfolder" type="folderlist" default="" label="PLG_USER_ZYGO_PROFILE_LABEL_AVATAR_DIR" description="PLG_USER_ZYGO_PROFILE_DESC_AVATAR_DIR" directory="media" filter="" exclude="" hide_none="1" stripext="" />
+				<field name="avatarfolder" type="text" default="images/zyprofile" label="PLG_USER_ZYGO_PROFILE_LABEL_AVATAR_DIR" description="PLG_USER_ZYGO_PROFILE_DESC_AVATAR_DIR" />
 
                 <field name="showdate" type="list" class="radio btn-group btn-group-yesno" 
                     default="0" label="PLG_USER_ZYGO_PROFILE_LABEL_SHOWDATE" 

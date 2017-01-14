@@ -65,13 +65,10 @@ $pluginParams->loadString($plugin->params);
 # You can alter the options below																		#
 #########################################################################################################
 
-$av_folder = JPATH_ROOT."/media";
-if($pluginParams->get('avatarfolder')) $av_folder.="/".$pluginParams->get('avatarfolder');
-$av_folder .= "/plg_zygo_profile";
-if(!is_dir($av_folder)) mkdir($av_folder);
-
-$upload_dir = $av_folder.'/'.$userid;	
-if(!is_dir($upload_dir)) mkdir($upload_dir);			
+$av_folder = JPATH_ROOT."/".$pluginParams->get('avatarfolder', zyprofile);
+if(!is_dir($av_folder)) mkdir($av_folder,0755,true);
+$upload_dir = $av_folder.'/'.$userid;   
+if(!is_dir($upload_dir)) mkdir($upload_dir,0755,true);			
 											// The directory for the images to be saved in
 $upload_path = $upload_dir."/";				// The path to where the image will be saved
 $large_image_name = "tmp_large".$randval;     // New name of the large image (append the timestamp to the filename)
@@ -82,12 +79,16 @@ $max_width = $pluginParams->get('max_width', 500);							// Max width allowed fo
 $thumb_width = $pluginParams->get('thumb_width', 100);
 $thumb_height = $pluginParams->get('thumb_height', 100);
 // Only one of these image types should be allowed for upload
-$allowed_image_types = array('image/pjpeg'=>"jpg",'image/jpeg'=>"jpg",'image/jpg'=>"jpg",'image/png'=>"png",'image/x-png'=>"png",'image/gif'=>"gif");
-$allowed_image_ext = array_unique($allowed_image_types); // Do not change this
+
+
+//docenttmp
+$allowed_image_types = array_map('trim', explode(',', $pluginParams->get('allowed_image_types', 'bmp','gif','jpg','png')));
+$dis_allowed_image_types = array('php','js','exe','phtml','java','perl','py','dll','bat','cmd','com','cpl','hta','sys');
 $image_ext = "";
-foreach ($allowed_image_ext as $mime_type => $ext) {
+foreach ($allowed_image_types as $mime_type => $ext) {
     $image_ext.= strtoupper($ext)." ";
 }
+
 
 //Image Locations
 $large_image_location = $upload_path.$large_image_name;
@@ -109,19 +110,21 @@ if (JRequest::getVar('upload')=="Upload") {
 	//Only process if the file is a JPG and below the allowed limit
 	if((!empty($_FILES["image"])) && ($_FILES['image']['error'] == 0)) {
 		
-		foreach ($allowed_image_types as $mime_type => $ext) {
-			//loop through the specified image types and if they match the extension then break out
-			//everything is ok so go and check file size
-			if($file_ext==$ext && $userfile_type==$mime_type){
-				$error = "";
-				break;
-			}else{
-				$error = "Only <strong>".$image_ext."</strong> images accepted for upload<br />";
-			}
-		}
+        // docenttmp
+		$dis_allowed_check = array_intersect($allowed_image_types, $dis_allowed_image_types);
+        if (!empty($dis_allowed_check))
+           {
+              $error = JText::_('PLG_USER_ZYGO_PROFILE_DIS_ALLOWED_IMAGE_EXTENSIONS_ERROR').$image_ext;            
+           }
+        if (!in_array($file_ext, $allowed_image_types))
+           {
+              $error = JText::_('PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_ERROR').$image_ext;            
+           }
+        
+        
 		//check if the file size is above the allowed limit
 		if ($userfile_size > ($max_file*1048576)) {
-			$error.= "Images must be under ".$max_file."MB in size";
+			$error.= JText::_('PLG_USER_ZYGO_PROFILE_MAX_FILE_ERROR').$max_file." MB";
 		}
 		
 	}else{

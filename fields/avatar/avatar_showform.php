@@ -13,38 +13,28 @@
  
 $app = JFactory::getApplication();
 $user = JFactory::getUser();
-
-$avatar = $app->input->get('avatar', "", "raw");
-
-if(!$app->isAdmin()){
-    
-    $usid = 0;
-    if($avatar){
-    
-        $avarr = explode("/", $avatar);
-
-        foreach($avarr as $k => $seg){
-            if($seg == "plg_zygo_profile" && ($k+1 < sizeof($avarr)) 
-                    && is_numeric($avarr[$k+1])){
-
-               $usid = (int)$avarr[$k+1];
-            }
-        }
-    }else if($app->input->getInt('id')){
-        $usid = $app->input->getInt('id');
-    }
-    
-	$canEdit = $user->authorise('core.edit', 'com_users');
-    if($user->id!=$usid && !$canEdit){
-      echo "ACCESS DENIED";
-      $app->close();
-    } 
-}
-
-
 $plugin = JPluginHelper::getPlugin('user', 'zygo_profile');
 $pluginParams = new JRegistry();
 $pluginParams->loadString($plugin->params);
+$avatar = $app->input->get('avatar', "", "raw");
+$avatar_pathinfo = pathinfo($avatar,PATHINFO_DIRNAME);
+$av_folder_current = $pluginParams->get('avatarfolder', zyprofile).'/'.$user->id;
+$av_folder_current_dirs = array(current(explode('/', $pluginParams->get('avatarfolder'))));
+$av_folder_blocked_dirs = array('administrator','bin','cache','cli','components','includes','language','layouts','libraries','logs','modules','plugins','tmp');
+$av_folder_blocked_check = array_intersect($av_folder_current_dirs, $av_folder_blocked_dirs);
+if (!empty($av_folder_blocked_check))
+{
+   echo '<meta charset="utf-8"/>'.JText::_('PLG_USER_ZYGO_PROFILE_AVATAR_DIR_ERROR_BLOCKED');
+   $app->close();   
+}
+if($avatar == ''){}
+elseif($avatar_pathinfo != $av_folder_current)
+{
+   echo '<meta charset="utf-8"/>'.JText::_('PLG_USER_ZYGO_PROFILE_AVATAR_DIR_ERROR_CHANGED');   
+   $app->close();
+}
+
+
 $thumb_width = $pluginParams->get('thumb_width', 100);
 $thumb_height = $pluginParams->get('thumb_height', 100);
 $helptext = $pluginParams->get('texthelp');
