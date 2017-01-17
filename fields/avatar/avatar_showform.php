@@ -18,7 +18,7 @@ $pluginParams = new JRegistry();
 $pluginParams->loadString($plugin->params);
 $avatar = $app->input->get('avatar', "", "raw");
 $avatar_pathinfo = pathinfo($avatar,PATHINFO_DIRNAME);
-$av_folder_current = $pluginParams->get('avatarfolder', zyprofile).'/'.$user->id;
+$av_folder_current = $pluginParams->get('avatarfolder', 'zyprofile').'/'.$user->id;
 $av_folder_current_dirs = array(current(explode('/', $pluginParams->get('avatarfolder'))));
 $av_folder_blocked_dirs = array('administrator','bin','cache','cli','components','includes','language','layouts','libraries','logs','modules','plugins','tmp');
 $av_folder_blocked_check = array_intersect($av_folder_current_dirs, $av_folder_blocked_dirs);
