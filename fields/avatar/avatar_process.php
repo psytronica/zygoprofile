@@ -65,7 +65,7 @@ $pluginParams->loadString($plugin->params);
 # You can alter the options below																		#
 #########################################################################################################
 
-$av_folder = JPATH_ROOT."/".$pluginParams->get('avatarfolder', zyprofile);
+$av_folder = JPATH_ROOT."/".$pluginParams->get('avatarfolder', "zyprofile");
 if(!is_dir($av_folder)) mkdir($av_folder,0755,true);
 $upload_dir = $av_folder.'/'.$userid;   
 if(!is_dir($upload_dir)) mkdir($upload_dir,0755,true);			
@@ -106,6 +106,8 @@ if (JRequest::getVar('upload')=="Upload") {
 	$userfile_type = $_FILES['image']['type'];
 	$filename = basename($_FILES['image']['name']);
 	$file_ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
+
+	$error = "";
 	
 	//Only process if the file is a JPG and below the allowed limit
 	if((!empty($_FILES["image"])) && ($_FILES['image']['error'] == 0)) {
