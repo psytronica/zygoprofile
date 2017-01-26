@@ -29,9 +29,32 @@ if (!empty($av_folder_blocked_check))
 }
 if($avatar == ''){}
 elseif($avatar_pathinfo != $av_folder_current)
-{
-   echo '<meta charset="utf-8"/>'.JText::_('PLG_USER_ZYGO_PROFILE_AVATAR_DIR_ERROR_CHANGED');   
-   $app->close();
+{	
+	include_once (JPATH_ROOT."/plugins/user/zygo_profile/zygo_helper.php");
+	$fid = false;
+	foreach(ZygoHelper::$profile as $f=>$prof){
+		if($prof['fieldType'] == 'avatar'){
+			$fid = $f;
+			break;}
+	}
+	$db = JFactory::getDBO();
+	$db->setQuery('UPDATE `#__user_profiles` SET `profile_value` = "'.$av_folder_current."/".basename($avatar).
+	 '\n" WHERE `#__user_profiles`.user_id = '.$user->id.' AND profile_key = '.$db->quote("zygo_profile.".$fid));
+	$db->execute();
+	$files = scandir($avatar_pathinfo);
+	$source = $avatar_pathinfo."/";
+	$destination = $av_folder_current."/";
+	if(!is_dir($av_folder_current)) mkdir($av_folder_current,0755,true);
+	foreach ( $files as $file ) {
+        if (in_array($file, array(".",".."))) continue;
+        if (copy($source.$file, $destination.$file)) {
+            $delete[] = $source.$file;}
+	}
+	foreach ( $delete as $file ) {
+        unlink( $file );}
+	rmdir($avatar_pathinfo);
+	echo '<script>parent.window.location.reload();</script>';
+	$app->close();
 }
 
 
