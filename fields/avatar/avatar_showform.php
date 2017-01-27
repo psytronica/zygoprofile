@@ -13,12 +13,14 @@
  
 $app = JFactory::getApplication();
 $user = JFactory::getUser();
+$userid = $user->id;
 $plugin = JPluginHelper::getPlugin('user', 'zygo_profile');
 $pluginParams = new JRegistry();
 $pluginParams->loadString($plugin->params);
 $avatar = $app->input->get('avatar', "", "raw");
 $avatar_pathinfo = pathinfo($avatar,PATHINFO_DIRNAME);
-$av_folder_current = $pluginParams->get('avatarfolder', 'zyprofile').'/'.$user->id;
+$av_folder_current = $pluginParams->get('avatarfolder', 'zyprofile');
+$av_folder_current_user = $av_folder_current.'/'.$userid;
 $av_folder_current_dirs = array(current(explode('/', $pluginParams->get('avatarfolder'))));
 $av_folder_blocked_dirs = array('administrator','bin','cache','cli','components','includes','language','layouts','libraries','logs','modules','plugins','tmp');
 $av_folder_blocked_check = array_intersect($av_folder_current_dirs, $av_folder_blocked_dirs);
@@ -27,9 +29,14 @@ if (!empty($av_folder_blocked_check))
    echo '<meta charset="utf-8"/>'.JText::_('PLG_USER_ZYGO_PROFILE_AVATAR_DIR_ERROR_BLOCKED');
    $app->close();   
 }
+if ($app->isAdmin()){
+$userid = $app->input->getInt('id');
+$av_folder_current_user = $av_folder_current.'/'.$userid;
+}
 if($avatar == ''){}
-elseif($avatar_pathinfo != $av_folder_current)
+elseif($avatar_pathinfo != $av_folder_current_user)
 {	
+	echo '<meta charset="utf-8"/>'.JText::_('PLG_USER_ZYGO_PROFILE_AVATAR_DIR_INFO_CHANGED');
 	include_once (JPATH_ROOT."/plugins/user/zygo_profile/zygo_helper.php");
 	$fid = false;
 	foreach(ZygoHelper::$profile as $f=>$prof){
@@ -38,13 +45,13 @@ elseif($avatar_pathinfo != $av_folder_current)
 			break;}
 	}
 	$db = JFactory::getDBO();
-	$db->setQuery('UPDATE `#__user_profiles` SET `profile_value` = "'.$av_folder_current."/".basename($avatar).
-	 '\n" WHERE `#__user_profiles`.user_id = '.$user->id.' AND profile_key = '.$db->quote("zygo_profile.".$fid));
+	$db->setQuery('UPDATE `#__user_profiles` SET `profile_value` = "'.$av_folder_current_user."/".basename($avatar).
+	 '\n" WHERE `#__user_profiles`.user_id = '.$userid.' AND profile_key = '.$db->quote("zygo_profile.".$fid));
 	$db->execute();
-	$files = scandir($avatar_pathinfo);
-	$source = $avatar_pathinfo."/";
-	$destination = $av_folder_current."/";
-	if(!is_dir($av_folder_current)) mkdir($av_folder_current,0755,true);
+	$files = scandir(JPATH_ROOT.'/'.$avatar_pathinfo);
+	$source = JPATH_ROOT.'/'.$avatar_pathinfo.'/';
+	$destination = JPATH_ROOT.'/'.$av_folder_current_user.'/';
+	if(!is_dir($destination)) mkdir($destination,0755,true);
 	foreach ( $files as $file ) {
         if (in_array($file, array(".",".."))) continue;
         if (copy($source.$file, $destination.$file)) {
@@ -52,9 +59,9 @@ elseif($avatar_pathinfo != $av_folder_current)
 	}
 	foreach ( $delete as $file ) {
         unlink( $file );}
-	rmdir($avatar_pathinfo);
+	rmdir($source);
 	echo '<script>parent.window.location.reload();</script>';
-	$app->close();
+	$app->close();	
 }
 
 
