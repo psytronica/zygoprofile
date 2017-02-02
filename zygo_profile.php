@@ -206,7 +206,7 @@ class plgUserZygo_profile extends JPlugin {
 			$link  = self::$noavatar;
 			$v1arr = '<img class="avatar" class="avInProfile" src="'.JURI::root().$link.'">';
 		} else {
-			$v1arr = '<img class="hasTooltip avatar" class="avInProfile" src="'.
+			$v1arr = '<img class="hasTooltip avatar avInProfile" src="'.
 			JURI::root().$link.'"title="<img src=\''.JURI::root().$linkLarge.'\'>">';
 		}
 		return $v1arr;
