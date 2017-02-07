@@ -78,6 +78,10 @@ var ZE_PATH = "'.JURI::root().'";
 var ZE_IMAGE_HANDLING_PATH = "'.$ustrFull.'";
 var ZE_THUMB_WIDTH = '.$thumb_width.';
 var ZE_THUMB_HEIGHT = '.$thumb_height.';
+var UPLOADING_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_MSG').'\';
+var UPLOADING_SUCCESS_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_MSG').'\';
+var UPLOADING_SUCCESS_DESC_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_DESC_MSG').'\';
+var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\';
 ';
 
 
@@ -90,6 +94,7 @@ var ZE_THUMB_HEIGHT = '.$thumb_height.';
 	<script type="text/javascript" src="<?php echo JURI::root(); ?>plugins/user/zygo_profile/fields/avatar/js/jquery.imgareaselect.min.js"></script>
 	<script type="text/javascript" src="<?php echo JURI::root(); ?>plugins/user/zygo_profile/fields/avatar/js/jquery.ocupload-packed.js"></script>
 	<script type="text/javascript" src="<?php echo JURI::root(); ?>plugins/user/zygo_profile/fields/avatar/js/avatar.js"></script>
+	<script type="text/javascript" src="<?php echo JURI::root(); ?>plugins/user/zygo_profile/fields/avatar/js/webcam.js"></script>
 	<script type="text/javascript">
 		<?php echo $script; ?>
 	</script>
@@ -104,7 +109,9 @@ var ZE_THUMB_HEIGHT = '.$thumb_height.';
 		<div style="float:left">
 			<a id="upload_link" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_SELECT_AVATAR"); ?></a>
 		</div>
-
+		<div style="float:left">
+			<a id="webcam_attach" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_ATTACH"); ?></a>
+		</div>		
 		<div id="thumbnail_form" <?php if(!$avatar) echo 'style="display:none;"'; ?>>
 			<form name="form" action="" method="post">
 				<input type="hidden" name="x1" value="" id="x1" />
@@ -136,6 +143,13 @@ var ZE_THUMB_HEIGHT = '.$thumb_height.';
 			?>
 		</div>
 		<div style="clear:both"></div>
+		<br/>
+		<div id="webcam_btn" style="float:right;display:none;">
+			<a id="webcam_upload" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?></a>
+			<a id="webcam_reset" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_RESET"); ?></a>
+		</div>
+		<div id="webcam_preview" style="display:none;"></div>
+		<div style="clear:both"></div>	
 	</div>
 
 
