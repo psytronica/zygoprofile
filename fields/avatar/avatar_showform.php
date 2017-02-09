@@ -64,6 +64,20 @@ elseif($avatar_pathinfo != $av_folder_current_user)
 	$app->close();	
 }
 
+$webcam_enable = $pluginParams->get('webcam_enable', 1);
+$webcam_enable_flash = $pluginParams->get('webcam_enable_flash', 1);
+$webcam_force_flash = $pluginParams->get('webcam_force_flash', 0);
+$webcam_jpeg_quality = $pluginParams->get('webcam_jpeg_quality', 90);
+if ($webcam_enable_flash == 1) {
+    $webcam_enable_flash = true;
+} else {
+    $webcam_enable_flash = false;
+}
+if ($webcam_force_flash == 1) {
+    $webcam_force_flash = true;
+} else {
+    $webcam_force_flash = false;
+}
 
 $thumb_width = $pluginParams->get('thumb_width', 100);
 $thumb_height = $pluginParams->get('thumb_height', 100);
@@ -78,6 +92,9 @@ var ZE_PATH = "'.JURI::root().'";
 var ZE_IMAGE_HANDLING_PATH = "'.$ustrFull.'";
 var ZE_THUMB_WIDTH = '.$thumb_width.';
 var ZE_THUMB_HEIGHT = '.$thumb_height.';
+var WEBCAM_ENABLE_FLASH = \''.$webcam_enable_flash.'\';
+var WEBCAM_FORCE_FLASH = \''.$webcam_force_flash.'\';
+var WEBCAM_JPEG_QUALITY = \''.$webcam_jpeg_quality.'\';
 var UPLOADING_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_MSG').'\';
 var UPLOADING_SUCCESS_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_MSG').'\';
 var UPLOADING_SUCCESS_DESC_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_DESC_MSG').'\';
@@ -109,8 +126,9 @@ var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\
 		<div style="float:left">
 			<a id="upload_link" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_SELECT_AVATAR"); ?></a>
 		</div>
-		<div style="float:left">
-			<a id="webcam_attach" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_ATTACH"); ?></a>
+		<div style="float:left;" >
+			<input type="button" id="webcam_attach" <?php if($webcam_enable == 0) echo 'style="display:none;"'; ?> class="btn btn-primary" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_ATTACH"); ?>" />
+			<input type="button" id="webcam_reset" style="display:none;" class="btn btn-primary" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_RESET"); ?>" />
 		</div>		
 		<div id="thumbnail_form" <?php if(!$avatar) echo 'style="display:none;"'; ?>>
 			<form name="form" action="" method="post">
@@ -144,9 +162,10 @@ var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\
 		</div>
 		<div style="clear:both"></div>
 		<br/>
-		<div id="webcam_btn" style="float:right;display:none;">
-			<a id="webcam_upload" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?></a>
-			<a id="webcam_reset" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_RESET"); ?></a>
+		<div style="float:right;">
+			<a id="webcam_upload" class="btn btn-primary" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?></a>
+			<a id="webcam_unfreeze" class="btn btn-primary" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UNFREEZE"); ?></a>
+			<a id="webcam_freeze" class="btn btn-primary" style="display:none;"href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_FREEZE"); ?></a>
 		</div>
 		<div id="webcam_preview" style="display:none;"></div>
 		<div style="clear:both"></div>	
