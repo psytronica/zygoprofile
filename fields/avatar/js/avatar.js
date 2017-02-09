@@ -218,18 +218,45 @@ jQuery(function($){
 			}
 		});
 		// webcam
+		Webcam.on( 'error', function(err) {
+			alert( 'No supported webcam interface found.' );
+			$('#webcam_attach').show();
+			$('#webcam_reset').hide();
+			$('#webcam_preview').hide();
+			$('#webcam_upload').hide();
+			$('#webcam_freeze').hide();
+			$('#webcam_unfreeze').hide();
+			Webcam.off();
+			Webcam.reset();
+		} );
 		$('#webcam_attach').click(function() {
 			Webcam.set({
-				width: 320,
-				height: 240
+				width: 400,
+				height: 300,
+				jpeg_quality: WEBCAM_JPEG_QUALITY,
+				enable_flash: WEBCAM_ENABLE_FLASH,
+				force_flash: WEBCAM_FORCE_FLASH
 			});
-			$('#webcam_preview').show();
-			$('#webcam_btn').show();
 			$('#webcam_attach').hide();
+			$('#webcam_reset').show();
+			$('#webcam_preview').show();
+			$('#webcam_freeze').show();
 			Webcam.attach( '#webcam_preview' );
 		});
 		$('#webcam_snapshot').click(function() {
 			alert( '#webcam_snapshot' );		
+		});
+		$('#webcam_freeze').click(function() {
+			$('#webcam_unfreeze').show();
+			$('#webcam_upload').show();
+			$('#webcam_freeze').hide();
+			Webcam.freeze();		
+		});
+		$('#webcam_unfreeze').click(function() {
+			$('#webcam_unfreeze').hide();
+			$('#webcam_upload').hide();
+			$('#webcam_freeze').show();
+			Webcam.unfreeze();		
 		});	
 		$('#webcam_upload').click(function() {
 			Webcam.snap( function(data_uri) {	
@@ -274,13 +301,18 @@ jQuery(function($){
 						}
 				});
 				Webcam.upload( data_uri, ZE_IMAGE_HANDLING_PATH );
-				
+				$('#webcam_unfreeze').hide();
+				$('#webcam_upload').hide();
+				$('#webcam_freeze').show();
 			});
 		});
 		$('#webcam_reset').click(function() {
-			$('#webcam_preview').hide();
-			$('#webcam_btn').hide();
 			$('#webcam_attach').show();
+			$('#webcam_reset').hide();
+			$('#webcam_preview').hide();
+			$('#webcam_upload').hide();
+			$('#webcam_freeze').hide();
+			$('#webcam_unfreeze').hide();
 			Webcam.reset();
 		});
 		// webcam end
