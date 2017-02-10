@@ -124,11 +124,11 @@ var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\
 		<noscript>Javascript must be enabled!</noscript>
 		<div id="upload_status"></div>
 		<div style="float:left">
-			<a id="upload_link" class="btn btn-primary" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_SELECT_AVATAR"); ?></a>
+			<input type="button" id="upload_link" class="btn btn-primary" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_SELECT_AVATAR"); ?>" />
 		</div>
 		<div style="float:left;" >
 			<input type="button" id="webcam_attach" <?php if($webcam_enable == 0) echo 'style="display:none;"'; ?> class="btn btn-primary" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_ATTACH"); ?>" />
-			<input type="button" id="webcam_reset" style="display:none;" class="btn btn-primary" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_RESET"); ?>" />
+			<input type="button" id="webcam_reset" style="display:none;" class="btn btn-danger" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_RESET"); ?>" />
 		</div>		
 		<div id="thumbnail_form" <?php if(!$avatar) echo 'style="display:none;"'; ?>>
 			<form name="form" action="" method="post">
@@ -163,8 +163,8 @@ var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\
 		<div style="clear:both"></div>
 		<br/>
 		<div style="float:right;">
-			<a id="webcam_upload" class="btn btn-primary" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?></a>
-			<a id="webcam_unfreeze" class="btn btn-primary" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UNFREEZE"); ?></a>
+			<a id="webcam_upload" class="btn btn-success" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?></a>
+			<a id="webcam_unfreeze" class="btn btn-danger" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UNFREEZE"); ?></a>
 			<a id="webcam_freeze" class="btn btn-primary" style="display:none;"href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_FREEZE"); ?></a>
 		</div>
 		<div id="webcam_preview" style="display:none;"></div>
