@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<updates>
+	<update>
+		<name>Zygo Profile</name>
+		<description>User's extended profiles plugin</description>
+		<element>zygo_profile</element>
+		<type>plugin</type>
+		<folder>user</folder>
+		<version>3.6.0-dev</version>
+		<infourl title="Zygo Profile">https://github.com/psytronica/zygoprofile</infourl>
+		<downloads>
+			<downloadurl type="full" format="zip">https://github.com/psytronica/zygoprofile/archive/x.x.x.zip</downloadurl>
+		</downloads>
+		<tags>
+			<tag>stable</tag>
+		</tags>
+		<maintainer>SherZa</maintainer>
+		<maintainerurl>http://psytronica.ru</maintainerurl>
+		<section>Updates</section>
+		<client>0</client>
+		<targetplatform name="joomla" version="3.[567]"/>
+		<php_minimum></php_minimum>
+	 </update>
+ </updates>
