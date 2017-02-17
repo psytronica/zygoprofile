@@ -100,7 +100,7 @@ $thumb_image_location = $upload_path.$thumb_image_name;
 ########################################################
 if (JRequest::getVar('upload')=="Upload") { 
 	//Get the file information
-	if (!$_FILES['image']){
+	if (!isset($_FILES['image'])){
 		$_FILES['image'] = $_FILES['webcam'];
 		}
 	$userfile_name = $_FILES['image']['name'];
