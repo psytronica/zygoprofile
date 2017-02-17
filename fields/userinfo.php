@@ -293,7 +293,9 @@ class JFormFieldUserinfo extends JFormField {
 
 		$activeTabVal = (isset($this->value['activeTab']) && $this->value['activeTab'])?$this->value['activeTab']:'';
 
-		if (!isset($this->value['code'][0])) {$this->value['code'][0] = true;
+		if (!isset($this->value['code'][0])) {
+			$this->value = array();
+			$this->value['code'][0] = true;
 		}
 
 		/*$FieldNamesNums=array();
