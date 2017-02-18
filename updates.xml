@@ -6,7 +6,7 @@
 		<element>zygo_profile</element>
 		<type>plugin</type>
 		<folder>user</folder>
-		<version>3.6.1-dev</version>
+		<version>3.6.0</version>
 		<infourl title="Zygo Profile">https://github.com/psytronica/zygoprofile</infourl>
 		<downloads>
 			<downloadurl type="full" format="zip">https://github.com/psytronica/zygoprofile/archive/x.x.x.zip</downloadurl>
