@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>zygopterix@gmail.com</authorEmail>
 	<authorUrl>http://psytronica.ru</authorUrl>
-	<version>3.6.0-dev</version>
+	<version>3.6.0</version>
 	<description>PLG_USER_ZYGO_PROFILE_XML_DESCRIPTION</description>
  
 	<files>
@@ -80,7 +80,7 @@
 	</config>
 	
 	<updateservers>
-		<server type="extension" priority="1" name="Zygo Profile-dev">https://github.com/psytronica/zygoprofile/blob/development/updates.xml?raw=true</server>
+		<server type="extension" priority="1" name="Zygo Profile">https://github.com/psytronica/zygoprofile/blob/master/updates.xml?raw=true</server>
 	</updateservers>
 
  </extension>
