@@ -34,7 +34,7 @@ class JFormFieldAvatar extends JFormField
 
         $uid = $app->getUserState('com_users.edit.profile.id', $app->input->get('id'));
 
-        if(!$app->isAdmin() && !$uid && (JRequest::getVar('option')=='com_users')){
+        if(!$app->isAdmin() && !$uid && ($app->input->get('option')=='com_users')){
 
         	$uid = $user->id;
         	$ustrFull.='&id='.$uid;
