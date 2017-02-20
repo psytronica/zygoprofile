@@ -180,7 +180,7 @@ jQuery(function($){
 				$.ajax({
 					type: 'POST',
 					url: ZE_IMAGE_HANDLING_PATH,
-					data: 'save_thumb=Save Thumbnail&x1='+x1+'&y1='+y1+'&x2='+x2+'&y2='+y2+'&w='+w+'&h='+h+'&zelarge='+srcAvArr[srcAvArr.length - 1],
+					data: 'save_thumb=SaveThumbnail&x1='+x1+'&y1='+y1+'&x2='+x2+'&y2='+y2+'&w='+w+'&h='+h+'&zelarge='+srcAvArr[srcAvArr.length - 1],
 					cache: false,
 					success: function(response){
 						loadingmessage('', 'hide');
