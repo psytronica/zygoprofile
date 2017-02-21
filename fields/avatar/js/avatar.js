@@ -235,7 +235,8 @@ jQuery(function($){
 				height: 300,
 				jpeg_quality: WEBCAM_JPEG_QUALITY,
 				enable_flash: WEBCAM_ENABLE_FLASH,
-				force_flash: WEBCAM_FORCE_FLASH
+				force_flash: WEBCAM_FORCE_FLASH,
+				upload_name: 'image'
 			});
 			$('#webcam_attach').hide();
 			$('#webcam_reset').show();
