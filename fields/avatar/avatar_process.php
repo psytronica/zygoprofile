@@ -98,13 +98,9 @@ $thumb_image_location = $upload_path.$thumb_image_name;
 ########################################################
 #	UPLOAD THE IMAGE								   #
 ########################################################
-$files_image = $app->input->files->get('image');
-$files_webcam = $app->input->files->get('webcam');
 if ($post->get('upload')=="Upload") { 
+	$files_image = $app->input->files->get('image');
 	//Get the file information
-	if (empty($files_image)){
-		$files_image = $files_webcam;
-		}
 	$userfile_name = $files_image['name'];
 	$userfile_tmp = $files_image['tmp_name'];
 	$userfile_size = $files_image['size'];
