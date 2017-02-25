@@ -41,9 +41,10 @@ class JFormFieldUserinfo extends JFormField {
 
 	protected function correctValue() {
 
+		$codeKeys = array();
+
 		if (!empty($this->value['fieldName'])) {
 
-			$codeKeys = array();
 			$count    = 0;
 			foreach ($this->value['fieldName'] as $key => $codeVal) {
 				$codeKeys[$key] = $count;
