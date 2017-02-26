@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension version="2.5" type="plugin" group="user" method="upgrade">
+<extension version="3.0" type="plugin" group="user" method="upgrade">
 	<name>plg_user_zygo_profile</name>
 	<author>SherZa</author>
 	<creationDate>October 2015</creationDate>
@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>zygopterix@gmail.com</authorEmail>
 	<authorUrl>http://psytronica.ru</authorUrl>
-	<version>3.5.0</version>
+	<version>3.6.0</version>
 	<description>PLG_USER_ZYGO_PROFILE_XML_DESCRIPTION</description>
  
 	<files>
@@ -19,52 +19,75 @@
 	</files>
  
 	<languages>
-		<language tag="ru-RU">languages/ru-RU/ru-RU.plg_user_zygo_profile.ini</language>
-		<language tag="ru-RU">languages/ru-RU/ru-RU.plg_user_zygo_profile.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.plg_user_zygo_profile.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.plg_user_zygo_profile.sys.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_user_zygo_profile.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.plg_user_zygo_profile.sys.ini</language>
 	</languages>
  
 	<config>
 		<fields name="params">
  
-			<fieldset name="basic"
-				addfieldpath="/plugins/user/zygo_profile/fields" >
-				<field name="userinfo" type="userinfo"
-					label="PLG_USER_ZYGO_PROFILE_USER_FIELDS"
-				/>
+			<fieldset name="basic" addfieldpath="/plugins/user/zygo_profile/fields" >
+				<field name="userinfo" type="userinfo" label="PLG_USER_ZYGO_PROFILE_USER_FIELDS" />
 			</fieldset>
- 			<fieldset name="advanced">
+ 			
+			<fieldset name="advanced">
  				<field name="thumb_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_WIDTH" default="100" filter="uint" maxlength="3"/>
-                                <field name="thumb_height" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_HEIGHT" default="100" filter="uint" maxlength="3"/>
-                                <field name="max_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_LARGE_WIDTH" default="500" filter="uint" maxlength="3"/>
+                		<field name="thumb_height" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_HEIGHT" default="100" filter="uint" maxlength="3"/>
+                		<field name="max_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_LARGE_WIDTH" default="500" filter="uint" maxlength="3"/>
 				<field name="max_file" type="text" label="PLG_USER_ZYGO_PROFILE_MAX_FILE_LABEL" default="2" filter="uint" maxlength="2"/>
-                                
-                                <field name="allowed_image_types" type="text" default="bmp,gif,jpg,png" label="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_LABEL" description="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_DESC"/>
-                                
+               			<field name="allowed_image_types" type="text" default="bmp,gif,jpg,png" label="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_LABEL" description="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_DESC"/>
 				<field name="noavatar" type="media" label="PLG_USER_ZYGO_PROFILE_LABEL_NOAVATAR" />
 				<field name="texthelp" filter='raw' type="textarea" label="PLG_USER_ZYGO_PROFILE_LABEL_IMAGE_EDIT_TEXT" default="" />
 				<field type="spacer" filter="raw" name="imgtextspacer" label="PLG_USER_ZYGO_PROFILE_DEFAULT_IMAGE_EDIT_TEXT" />
-
 				<field name="avatarfolder" type="text" default="images/zyprofile" label="PLG_USER_ZYGO_PROFILE_LABEL_AVATAR_DIR" description="PLG_USER_ZYGO_PROFILE_DESC_AVATAR_DIR" />
-
-                <field name="showdate" type="list" class="radio btn-group btn-group-yesno" 
-                    default="0" label="PLG_USER_ZYGO_PROFILE_LABEL_SHOWDATE" 
-                    description="PLG_USER_ZYGO_PROFILE_DESC_SHOWDATE">
+                <field name="showdate" type="list" class="radio btn-group btn-group-yesno" default="0" label="PLG_USER_ZYGO_PROFILE_LABEL_SHOWDATE" description="PLG_USER_ZYGO_PROFILE_DESC_SHOWDATE">
 				  <option value="0">PLG_USER_ZYGO_PROFILE_SHOWDATE_JOOMLA</option>
 				  <option value="1">PLG_USER_ZYGO_PROFILE_SHOWDATE_HTML5</option>
 				</field>
 
 
- 			</fieldset>	
- 			<fieldset name="spamfilter">
+				<field name="show_avatar_tooltip" type="list" default="1" label="PLG_USER_ZYGO_PROFILE_LABEL_SHOW_AVATAR_TOOLTIP" description="PLG_USER_ZYGO_PROFILE_DESC_SHOW_AVATAR_TOOLTIP">
+				  <option value="0">JNO</option>
+				  <option value="1">JYES</option>
+				</field>
+				
+ 			</fieldset>
+			
+			<fieldset name="webcam">
+				<field name="webcam_enable" type="radio" class="radio btn-group btn-group-yesno" default="1" label="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_DESC">
+				  <option value="0">JNO</option>
+				  <option value="1">JYES</option>
+				</field>
+				<field name="webcam_enable_flash" type="radio" class="radio btn-group btn-group-yesno" default="1" label="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_FLASH_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_FLASH_DESC">
+				  <option value="0">JNO</option>
+				  <option value="1">JYES</option>
+				</field>
+				<field name="webcam_force_flash" type="radio" class="radio btn-group btn-group-yesno" default="0" label="PLG_USER_ZYGO_PROFILE_WEBCAM_FORCE_FLASH_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_FORCE_FLASH_DESC">
+				  <option value="0">JNO</option>
+				  <option value="1">JYES</option>
+				</field>
+				<field name="webcam_jpeg_quality" type="number" label="PLG_USER_ZYGO_PROFILE_WEBCAM_JPEG_QUALITY_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_JPEG_QUALITY_DESC" default="90" min="0" max="100" step="5"/>
+				<field type="spacer" filter="raw" name="webcam_info" label="PLG_USER_ZYGO_PROFILE_WEBCAM_INFO" />
+ 			</fieldset>
+ 			
+			<fieldset name="spamfilter">
 				<field name="spam" type="radio" class="radio btn-group btn-group-yesno" default="0" label="PLG_USER_ZYGO_PROFILE_LABEL_SPAMFILTER" description="PLG_USER_ZYGO_PROFILE_DESC_SPAMFILTER">
 				  <option value="0">JNO</option>
 				  <option value="1">JYES</option>
 				</field>
- 			</fieldset>
+ 			</fieldset>	
+			
 			<fieldset name="apis_integrations">
 				<field type="spacer" filter="raw" name="integrations" label="PLG_USER_ZYGO_PROFILE_GET_PROFILE_DATA" />
 			</fieldset>
 
 		</fields>
 	</config>
+	
+	<updateservers>
+		<server type="extension" priority="1" name="Zygo Profile">https://github.com/psytronica/zygoprofile/blob/master/updates.xml?raw=true</server>
+	</updateservers>
+
  </extension>

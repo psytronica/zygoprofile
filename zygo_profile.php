@@ -30,6 +30,7 @@ class plgUserZygo_profile extends JPlugin {
 	// image that uses if in plugin settings in backend was not selected
 	// default avatar image
 	public static $noavatar = "plugins/user/zygo_profile/fields/images/noPhoto.jpg";
+	public static $show_avatar_tooltip = 1;
 	public $layout          = "";
 
 	public function __construct(&$subject, $config) {
@@ -44,8 +45,11 @@ class plgUserZygo_profile extends JPlugin {
 			$this->app->close();
 		}
 
-		if ($this->params->get('noavatar')) {self::$noavatar = $this->params->get('noavatar');
+		if ($this->params->get('noavatar')) {
+			self::$noavatar = $this->params->get('noavatar');
 		}
+
+		self::$show_avatar_tooltip = $this->params->get('show_avatar_tooltip', 1);
 
 		$this->getLayout();
 	}
@@ -166,10 +170,17 @@ class plgUserZygo_profile extends JPlugin {
 			}
             
 
+			$dt = (!empty($v1arr) && isset($v1arr[1]))?$v1arr:$v[1];
+
+			if(is_array($dt) && in_array($fNamesToTypes[$k], 
+					array("text", "date"))){
+				$dt = "";
+			}
+
 			if (is_array($data)) {
-				$data['zygo_profile'][$k] = (!empty($v1arr) && isset($v1arr[1]))?$v1arr:$v[1];
+				$data['zygo_profile'][$k] = $dt;
 			} else {
-				$data->zygo_profile[$k] = (!empty($v1arr) && isset($v1arr[1]))?$v1arr:$v[1];
+				$data->zygo_profile[$k] = $dt;
 			}
             
 
@@ -201,13 +212,15 @@ class plgUserZygo_profile extends JPlugin {
 
 		}
 
-		if (!$link) {
+		if ($link && self::$show_avatar_tooltip) {
 
-			$link  = self::$noavatar;
-			$v1arr = '<img class="avatar avInProfile" src="'.JURI::root().$link.'">';
-		} else {
 			$v1arr = '<img class="hasTooltip avatar avInProfile" src="'.
 			JURI::root().$link.'"title="<img src=\''.JURI::root().$linkLarge.'\'>">';
+
+		} else {
+
+			if(!$link) $link  = self::$noavatar;
+			$v1arr = '<img class="avatar avInProfile" src="'.JURI::root().$link.'">';
 		}
 		return $v1arr;
 	}
@@ -529,9 +542,11 @@ class plgUserZygo_profile extends JPlugin {
 	 */
 	public function onUserAfterSave($data, $isNew, $result, $error) {
 		$userId = JArrayHelper::getValue($data, 'id', 0, 'int');
-
+ 
+		$userinfo = $this->checkUserInfo();
+ 
 		if ($userId && $result && isset($data['zygo_profile']) && (count($data['zygo_profile']))) {
-
+ 
 			try
 			{
 				$db = JFactory::getDbo();
@@ -539,25 +554,33 @@ class plgUserZygo_profile extends JPlugin {
 				if (!$db->query()) {
 					throw new Exception($db->getErrorMsg());
 				}
-
+ 
 				$tuples = array();
 				$order  = 1;
-
+ 
 				foreach ($data['zygo_profile'] as $k => $v) {
-
-					if (isset($v['avatar']) && (strpos($v['value'], 'tmp_') !== false)) {
-
+ 
+					$fieldNum = str_replace("uniqueID", "", $k);
+					if (is_array($userinfo->fieldType)) {
+						$ftype = $userinfo->fieldType[$fieldNum];
+					} else {
+						$ftype = $userinfo->fieldType->$fieldNum;
+					}
+ 
+ 
+					if ($ftype == "avatar" && (strpos($v['value'], 'tmp_') !== false)) {
+ 
 						if ($isNew) {
 							$session = JFactory::getSession();
 							$uid_pre = $session->get('zeavuserid');
-
+ 
 							$avArr       = explode('/', $v['value']);
 							$avThumbName = array_pop($avArr);
 							$avFolder    = JPATH_ROOT.'/'.implode('/', $avArr);
 							$v['value']  = str_replace($uid_pre, $userId, $v['value']);
 							rename($avFolder, str_replace($uid_pre, $userId, $avFolder));
 						}
-
+ 
 						$avField     = $v['avatar'];
 						$avatarThumb = $v['value'];
 						$avArr       = explode('/', $avatarThumb);
@@ -571,10 +594,10 @@ class plgUserZygo_profile extends JPlugin {
 							// (it was not only new thumb generation)
 							rename($avFolder.'/'.$avLargeName, $avFolder.'/'.$largeName);
 						}
-
+ 
 						$thumbName = str_replace('tmp_', '', $avThumbName);
 						rename($avFolder.'/'.$avThumbName, $avFolder.'/'.$thumbName);
-
+ 
 						$files = scandir($avFolder);
 						$noDel = array('.', '..', $thumbName, $largeName);
 						foreach ($files as $file) {
@@ -583,8 +606,8 @@ class plgUserZygo_profile extends JPlugin {
 							}
 						}
 						$v['value'] = implode('/', $avArr).'/'.$thumbName;
-					} else if (isset($v['avatar']) && ($v['value'] != 'noavatar')) {
-
+					} else if ($ftype == "avatar" && ($v['value'] != 'noavatar')) {
+ 
 						$avatarThumb = $v['value'];
 						$avArr       = explode('/', $avatarThumb);
 						$avThumbName = array_pop($avArr);
@@ -595,10 +618,10 @@ class plgUserZygo_profile extends JPlugin {
 								unlink($avFolder.'/'.$file);
 							}
 						}
-					} else if (isset($v['avatar'])) {
-
+					} else if ($ftype == "avatar") {
+ 
 						$avFolder = JPATH_ROOT."/".$this->params->get('avatarfolder').'/'.$userId;
-
+ 
 						$files = scandir($avFolder);
 						foreach ($files as $file) {
 							if ($file != '.' && $file != '..') {
@@ -607,11 +630,11 @@ class plgUserZygo_profile extends JPlugin {
 						}
 						$v['value'] = '';
 					}
-
+ 
 					$v        = (is_array($v))?implode("\n", $v):$v;
 					$tuples[] = '('.$userId.', '.$db->quote('zygo_profile.'.$k).', '.$db->quote($v).', '.$order++ .')';
 				}
-
+ 
 				$db->setQuery('INSERT INTO #__user_profiles VALUES '.implode(', ', $tuples));
 				if (!$db->query()) {
 					throw new Exception($db->getErrorMsg());
@@ -622,10 +645,10 @@ class plgUserZygo_profile extends JPlugin {
 				return false;
 			}
 		}
-
+ 
 		$cache = JFactory::getCache('com_users', '');
 		$cache->clean('com_users');
-
+ 
 		return true;
 	}
 

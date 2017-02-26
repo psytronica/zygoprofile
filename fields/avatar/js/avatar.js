@@ -113,7 +113,7 @@ jQuery(function($){
 					if($('#uploaded_image').find('#thumbnail').height()){
 						$('#uploaded_image').find('#thumbnail').imgAreaSelect({ disable: true, hide: true }); 
 					}
-					loadingmessage('Please wait, uploading file...', 'show');
+					loadingmessage(UPLOADING_MSG, 'show');
 			   },
 			   onComplete: function(response) {
 			   		loadingmessage('', 'hide');
@@ -125,7 +125,7 @@ jQuery(function($){
 						var current_width = response[2];
 						var current_height = response[3];
 						//display message that the file has been uploaded
-						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">Success</strong> <span>The image has been uploaded</span></div>');
+						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">'+UPLOADING_SUCCESS_MSG+'</strong> <span>'+UPLOADING_SUCCESS_DESC_MSG+'</span></div>');
 						//put the image in the appropriate div
 						$('#uploaded_image').html('<img src="'+responseMsg+'" id="thumbnail" /><div style="width:'+ZE_THUMB_WIDTH+'px; height:'+ZE_THUMB_HEIGHT+'px;"><img src="'+responseMsg+'" style="position: relative;" id="thumbnail_preview" /></div>');
 							var intId = setInterval( function() {
@@ -175,12 +175,12 @@ jQuery(function($){
 				$('#uploaded_image').find('#thumbnail').imgAreaSelect({ disable: true, hide: true });
 				var srcAvArr = $('#uploaded_image').find('#thumbnail').attr('src').split('/');
 
-				loadingmessage('Please wait, saving thumbnail....', 'show');
+				loadingmessage(SAVING_THUMB_MSG, 'show');
 
 				$.ajax({
 					type: 'POST',
 					url: ZE_IMAGE_HANDLING_PATH,
-					data: 'save_thumb=Save Thumbnail&x1='+x1+'&y1='+y1+'&x2='+x2+'&y2='+y2+'&w='+w+'&h='+h+'&zelarge='+srcAvArr[srcAvArr.length - 1],
+					data: 'save_thumb=SaveThumbnail&x1='+x1+'&y1='+y1+'&x2='+x2+'&y2='+y2+'&w='+w+'&h='+h+'&zelarge='+srcAvArr[srcAvArr.length - 1],
 					cache: false,
 					success: function(response){
 						loadingmessage('', 'hide');
@@ -217,5 +217,105 @@ jQuery(function($){
 				return false;
 			}
 		});
+		// webcam
+		Webcam.on( 'error', function(err) {
+			alert( 'No supported webcam interface found.' );
+			$('#webcam_attach').show();
+			$('#webcam_reset').hide();
+			$('#webcam_preview').hide();
+			$('#webcam_upload').hide();
+			$('#webcam_freeze').hide();
+			$('#webcam_unfreeze').hide();
+			Webcam.off();
+			Webcam.reset();
+		} );
+		$('#webcam_attach').click(function() {
+			Webcam.set({
+				width: 400,
+				height: 300,
+				jpeg_quality: WEBCAM_JPEG_QUALITY,
+				enable_flash: WEBCAM_ENABLE_FLASH,
+				force_flash: WEBCAM_FORCE_FLASH,
+				upload_name: 'image'
+			});
+			$('#webcam_attach').hide();
+			$('#webcam_reset').show();
+			$('#webcam_preview').show();
+			$('#webcam_freeze').show();
+			Webcam.attach( '#webcam_preview' );
+		});
+		$('#webcam_snapshot').click(function() {
+			alert( '#webcam_snapshot' );		
+		});
+		$('#webcam_freeze').click(function() {
+			$('#webcam_unfreeze').show();
+			$('#webcam_upload').show();
+			$('#webcam_freeze').hide();
+			Webcam.freeze();		
+		});
+		$('#webcam_unfreeze').click(function() {
+			$('#webcam_unfreeze').hide();
+			$('#webcam_upload').hide();
+			$('#webcam_freeze').show();
+			Webcam.unfreeze();		
+		});	
+		$('#webcam_upload').click(function() {
+			Webcam.snap( function(data_uri) {	
+				Webcam.on( 'uploadProgress', function(progress) {
+					$('#upload_status').html('').hide();
+					if($('#uploaded_image').find('#thumbnail').height()){
+						$('#uploaded_image').find('#thumbnail').imgAreaSelect({ disable: true, hide: true }); 
+					}
+					loadingmessage(UPLOADING_MSG, 'show');
+				});			
+				Webcam.on( 'uploadComplete', function(code, text) {
+					loadingmessage('', 'hide');
+					response = unescape(text);
+					var response = response.split("|");
+					var responseType = response[0];
+					var responseMsg = response[1];
+					if(responseType=="success"){
+						var current_width = response[2];
+						var current_height = response[3];
+						//display message that the file has been uploaded
+						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">'+UPLOADING_SUCCESS_MSG+'</strong> <span>'+UPLOADING_SUCCESS_DESC_MSG+'</span></div>');
+						//put the image in the appropriate div
+						$('#uploaded_image').html('<img src="'+responseMsg+'" id="thumbnail" /><div style="width:'+ZE_THUMB_WIDTH+'px; height:'+ZE_THUMB_HEIGHT+'px;"><img src="'+responseMsg+'" style="position: relative;" id="thumbnail_preview" /></div>');
+						var intId = setInterval( function() {
+						var tHeight = $('#uploaded_image').find('#thumbnail').height();
+						if(tHeight){ 
+							clearInterval(intId); 
+							var thumbImg = $('#uploaded_image').find('#thumbnail');
+							var sel=zeGetThumbCoords(thumbImg);
+							thumbImg.imgAreaSelect({ aspectRatio: '1:'+(ZE_THUMB_HEIGHT/ZE_THUMB_WIDTH), onSelectChange: preview, x1:sel.X1, x2:sel.X2, y1:sel.Y1, y2:sel.Y2 }); 
+								}
+							} , 100);
+						$('#thumbnail_form').show();
+						}else if(responseType=="error"){
+							$('#upload_status').show().html('<div class="alert alert-error"><h1>Error</h1><p>'+responseMsg+'</p></div>');
+							$('#uploaded_image').html('');
+							$('#thumbnail_form').hide();
+						}else{
+							$('#upload_status').show().html('<div class="alert alert-error"><h1>Unexpected Error</h1></div>'+response);
+							$('#uploaded_image').html('');
+							$('#thumbnail_form').hide();
+						}
+				});
+				Webcam.upload( data_uri, ZE_IMAGE_HANDLING_PATH );
+				$('#webcam_unfreeze').hide();
+				$('#webcam_upload').hide();
+				$('#webcam_freeze').show();
+			});
+		});
+		$('#webcam_reset').click(function() {
+			$('#webcam_attach').show();
+			$('#webcam_reset').hide();
+			$('#webcam_preview').hide();
+			$('#webcam_upload').hide();
+			$('#webcam_freeze').hide();
+			$('#webcam_unfreeze').hide();
+			Webcam.reset();
+		});
+		// webcam end
 	}); 
 });

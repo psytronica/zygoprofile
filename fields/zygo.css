@@ -1,0 +1,203 @@
+.row-fluid .form-horizontal .controls {
+    margin-left: 0px;
+}
+.zygo_head {
+    line-height: 38px;
+    font-weight: bold;
+    height: 38px;
+    font-size: 12px;
+    padding: 0 10px;
+    margin: 10px 0;
+    border: 1px solid #E2D0E8;
+    border-top-color: #EDDFF2;
+    background: #f3e0f7;
+    /* for non-css3 browsers */
+    
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#F4E7F7');
+    /* for IE */
+    
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3e0f7));
+    /* for webkit browsers */
+    
+    background: -moz-linear-gradient(top, #fff, #f3e0f7);
+    /* for firefox 3.6+ */
+    
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    cursor: pointer;
+}
+.zygo_head a {
+    background: white;
+    color: #8E0B8C !important;
+    border: 1px solid #E2D0E8;
+    background: #8E0B8C;
+    display: block;
+    float: right;
+    height: 22px;
+    line-height: 22px;
+    text-transform: uppercase;
+    color: white!important;
+    font-size: 10px;
+    padding: 0 14px;
+    font-weight: bold;
+    margin-top: 7px;
+    border-radius: 26px;
+    -moz-border-radius: 26px;
+    -webkit-border-radius: 26px;
+    background: white;
+    color: #8E0B8C !important;
+    border: 1px solid #E2D0E8;
+}
+
+.zygo_table{
+    width:100%;
+    text-align: center;
+    border-collapse: separate;
+    border-spacing: 0px 10px;
+}
+.zygo_table tbody tr.zygo_line{
+    background: #F8EDFA;
+}
+
+.zygo_table tbody tr.zygo_line>td{
+    vertical-align: top;   
+    padding: 0px; 
+    border-top: 1px solid #EDDFF2;
+    border-bottom: 1px solid #E2D0E8;    
+}
+
+.zygo_table tbody tr.zygo_line>td.first{
+
+    border-top: 1px solid #EDDFF2;
+    border-left: 1px solid #E2D0E8;
+    border-bottom: 1px solid #E2D0E8;
+    border-right:0px;
+
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.zygo_table tbody tr.zygo_line>td.last{
+
+    border-top: 1px solid #EDDFF2;
+    border-right: 1px solid #E2D0E8;
+    border-bottom: 1px solid #E2D0E8;
+    border-left:0px;
+
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.zygo_remove_btn,
+.zygo_toggle_btn {
+    display: block;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    margin-top:5px;
+
+}
+.zygo_toggle_btn{
+    background: url(images/plus.png) no-repeat left top transparent;
+}
+.zygo_toggle_btn:hover {
+    background: url("images/plus_hover.png") no-repeat left top transparent;
+}
+.zygo_toggle_btn.active {
+    background: url("images/minus.png") no-repeat left top transparent;
+}
+.zygo_toggle_btn.active:hover {
+    background: url("images/minus_hover.png") no-repeat left top transparent;
+}
+
+.zygo_remove_btn {
+    background: url(images/remove.png) no-repeat left top transparent;
+}
+
+.zygo_more{
+    text-align: left;
+    display: none;
+}
+.zygo_more input, 
+.zygo_more .chzn-container, 
+.zygo_more select,
+.zygo_more textarea{
+    float:left;
+    margin-right:10px;
+}
+.zygo_more_param{
+    padding:5px;
+}
+
+.zygo50{
+    width:50%;
+    float:left;
+    text-align: left;
+}
+
+.zygo_tdhead,
+.zygo_table tbody tr .sortable-handler{
+    background:#fff;
+    padding:8px;
+    height:30px;
+    line-height:30px;
+    display: block;
+}
+
+.zygo_table tbody tr.zygo_line>td.first .sortable-handler{
+
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.zygo_table tbody tr.zygo_line>td.last .zygo_tdhead{
+
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+
+.zygo_line.open .zygo_tdhead,
+.zygo_table tbody tr.zygo_line.open .sortable-handler{
+    border-bottom: 1px solid #E2D0E8;
+}
+
+.zygo_tdhead{
+    padding:8px 8px 8px 0;
+}
+
+.zygo_styled {
+    border: 1px solid #E2D0E8;
+    border-top-color: #EDDFF2;
+    background: #f3e0f7;
+    padding: 2px 5px;
+    filter: progid: DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#F4E7F7');
+    background: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f3e0f7));
+    background: -moz-linear-gradient(top, #fff, #f3e0f7);
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+    cursor: pointer;
+}
+
+.zygo_line0,
+.zygo_more_param_fieldName{
+    display:none;
+}

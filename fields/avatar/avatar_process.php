@@ -18,15 +18,15 @@
 * STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF 
 * THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 *
-* http://www.opensource.org/licenses/bsd-license.php
+* @license Simplified BSD License: http://www.opensource.org/licenses/bsd-license.php
 *
 * Modified by SherZa (irina@psytronica.ru)
 */
 
 $session = JFactory::getSession();
 $app = JFactory::getApplication();
-
-$userid= $app->input->getInt('id');
+$post = $app->input->post;
+$userid = $app->input->getInt('id');
 if(!$userid){
 	$userid  = $session->get( 'zeavuserid');
 	if(!$userid){
@@ -46,7 +46,7 @@ function make_seed()
   return (float) $sec + ((float) $usec * 100000);
 }
 
-if (JRequest::getVar('upload')=="Upload") { 
+if ($post->get('upload')=="Upload") { 
 	mt_srand(make_seed());
 	$randval = mt_rand();
 	$session->set( 'zeRandAvatar', $randval);
@@ -98,19 +98,20 @@ $thumb_image_location = $upload_path.$thumb_image_name;
 ########################################################
 #	UPLOAD THE IMAGE								   #
 ########################################################
-if (JRequest::getVar('upload')=="Upload") { 
+if ($post->get('upload')=="Upload") { 
+	$files_image = $app->input->files->get('image');
 	//Get the file information
-	$userfile_name = $_FILES['image']['name'];
-	$userfile_tmp = $_FILES['image']['tmp_name'];
-	$userfile_size = $_FILES['image']['size'];
-	$userfile_type = $_FILES['image']['type'];
-	$filename = basename($_FILES['image']['name']);
+	$userfile_name = $files_image['name'];
+	$userfile_tmp = $files_image['tmp_name'];
+	$userfile_size = $files_image['size'];
+	$userfile_type = $files_image['type'];
+	$filename = basename($files_image['name']);
 	$file_ext = strtolower(substr($filename, strrpos($filename, '.') + 1));
 
 	$error = "";
 	
 	//Only process if the file is a JPG and below the allowed limit
-	if((!empty($_FILES["image"])) && ($_FILES['image']['error'] == 0)) {
+	if((!empty($files_image)) && ($files_image['error'] == 0)) {
 		
         // docenttmp
 		$dis_allowed_check = array_intersect($allowed_image_types, $dis_allowed_image_types);
@@ -135,7 +136,7 @@ if (JRequest::getVar('upload')=="Upload") {
 	//Everything is ok, so we can upload the image.
 	if (strlen($error)==0){
 		
-		if (isset($_FILES['image']['name'])){
+		if (isset($files_image['name'])){
 
     		$files = scandir($upload_dir);
 		    foreach ($files as $file) {
@@ -181,17 +182,17 @@ if (JRequest::getVar('upload')=="Upload") {
 ########################################################
 #	CREATE THE THUMBNAIL							   #
 ########################################################
-if (JRequest::getVar('save_thumb')=="Save Thumbnail") { 
+if ($post->get('save_thumb')=="SaveThumbnail") { 
 	//Get the new coordinates to crop the image.
-	$x1 = $_POST["x1"];
-	$y1 = $_POST["y1"];
-	$x2 = $_POST["x2"];
-	$y2 = $_POST["y2"];
-	$w = $_POST["w"];
-	$h = $_POST["h"];
+	$x1 = $post->get('x1');
+	$y1 = $post->get('y1');
+	$x2 = $post->get('x2');
+	$y2 = $post->get('y2');
+	$w = $post->get('w');
+	$h = $post->get('h');
 	//Scale the image to the thumb_width set above
 
-	$zelarge=JRequest::getVar('zelarge');
+	$zelarge=$post->get('zelarge');
 	if($zelarge){
 		$large_image_location=$upload_path.$zelarge;
 		$zethumb=(strpos($zelarge, 'tmp_')!==false)? 
@@ -226,10 +227,10 @@ if (JRequest::getVar('save_thumb')=="Save Thumbnail") {
 #####################################################
 #	DELETE BOTH IMAGES								#
 #####################################################
-if (JRequest::getVar('a')=="delete" && strlen($_POST['large_image'])>0 && strlen($_POST['thumbnail_image'])>0){
+if ($post->get('a')=="delete" && strlen($post->get('large_image'))>0 && strlen($post->get('thumbnail_image'))>0){
 //get the file locations 
-	$large_image_location = $_POST['large_image'];
-	$thumb_image_location = $_POST['thumbnail_image'];
+	$large_image_location = $post->get('large_image');
+	$thumb_image_location = $post->get('thumbnail_image');
 	if (file_exists($large_image_location)) {
 		unlink($large_image_location);
 	}
