@@ -30,6 +30,7 @@ class plgUserZygo_profile extends JPlugin {
 	// image that uses if in plugin settings in backend was not selected
 	// default avatar image
 	public static $noavatar = "plugins/user/zygo_profile/fields/images/noPhoto.jpg";
+	public static $show_avatar_tooltip = 1;
 	public $layout          = "";
 
 	public function __construct(&$subject, $config) {
@@ -44,8 +45,11 @@ class plgUserZygo_profile extends JPlugin {
 			$this->app->close();
 		}
 
-		if ($this->params->get('noavatar')) {self::$noavatar = $this->params->get('noavatar');
+		if ($this->params->get('noavatar')) {
+			self::$noavatar = $this->params->get('noavatar');
 		}
+
+		self::$show_avatar_tooltip = $this->params->get('show_avatar_tooltip', 1);
 
 		$this->getLayout();
 	}
@@ -208,14 +212,14 @@ class plgUserZygo_profile extends JPlugin {
 
 		}
 
-		if ($link && $this->params->get('show_avatar_tooltip', 1)) {
+		if ($link && self::$show_avatar_tooltip) {
 
 			$v1arr = '<img class="hasTooltip avatar avInProfile" src="'.
 			JURI::root().$link.'"title="<img src=\''.JURI::root().$linkLarge.'\'>">';
 
 		} else {
 
-			$link  = self::$noavatar;
+			if(!$link) $link  = self::$noavatar;
 			$v1arr = '<img class="avatar avInProfile" src="'.JURI::root().$link.'">';
 		}
 		return $v1arr;
