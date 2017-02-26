@@ -52,22 +52,31 @@ class JFormFieldAvatar extends JFormField
 
 		$frameWidth = $max_width + $thumb_width + 50;
 		$html=''; $value='';
+
+		// Для совместимости с предыдущими версиями, где $this->value был array 
 		if(is_array($this->value)){
 			$vv= array_values($this->value);
 			$value=isset($vv[0])? $vv[0] : '';
+		}else{
+			$value = $this->value;
 		}
 
 		$no_av_link = $pluginParams->get('noavatar', 'plugins/user/zygo_profile/fields/images/noPhoto.jpg');
 
 		$noAvImg = '<img src="'.JURI::root().$no_av_link.'" id="zenoavatar" style="width:'.$thumb_width.'px; height:'.$thumb_height.'px" />';
 
-		$avImg=($value)? '<img src="'.JURI::root().$value.'" class="hasTooltip required" title="<img src=\''.JURI::root().str_replace('thumb', 'large', $value).'\' />" />' : $noAvImg;
+		if($value){
+			$avImg=($pluginParams->get('show_avatar_tooltip', 1))? 
+			'<img src="'.JURI::root().$value.'" class="hasTooltip required" title="<img src=\''.JURI::root().str_replace('thumb', 'large', $value).'\' />" />' :  
+			'<img src="'.JURI::root().$value.'" class="required"  />';
+		}else{
+			$avImg = $noAvImg;
+		}
 
 		if($value) $ustrFull .= '&avatar='.$value;
 		$html.='<div id="ze_avatar_wrapper" class="img-polaroid img-rounded" style="display:inline-block; margin-bottom:10px;">'.$avImg.'</div><br />';
 		$html.='<div style="display:none">';
 		$html.='<input id="ze_avatar_input" name="jform[zygo_profile]['.$this->fieldname.'][value]" value="'.$value.'" />';
-		$html.='<input name="jform[zygo_profile]['.$this->fieldname.'][avatar]" value="" />';
 		$html.='</div>';
 		
 

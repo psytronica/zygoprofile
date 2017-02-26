@@ -53,24 +53,50 @@
 .zygo_table{
     width:100%;
     text-align: center;
-    border-collapse: collapse;
-    border-spacing: 0px;
+    border-collapse: separate;
+    border-spacing: 0px 10px;
 }
 .zygo_table tbody tr.zygo_line{
-    margin: 10px 0;
-    border: 1px solid #E2D0E8;
-    border-top:10px solid white;
-    border-radius: 4px;
-    -moz-border-radius: 4px;
-    -webkit-border-radius: 4px;
     background: #F8EDFA;
 }
 
 .zygo_table tbody tr.zygo_line>td{
     vertical-align: top;   
     padding: 0px; 
+    border-top: 1px solid #EDDFF2;
     border-bottom: 1px solid #E2D0E8;    
 }
+
+.zygo_table tbody tr.zygo_line>td.first{
+
+    border-top: 1px solid #EDDFF2;
+    border-left: 1px solid #E2D0E8;
+    border-bottom: 1px solid #E2D0E8;
+    border-right:0px;
+
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.zygo_table tbody tr.zygo_line>td.last{
+
+    border-top: 1px solid #EDDFF2;
+    border-right: 1px solid #E2D0E8;
+    border-bottom: 1px solid #E2D0E8;
+    border-left:0px;
+
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
 .zygo_remove_btn,
 .zygo_toggle_btn {
     display: block;
@@ -125,9 +151,34 @@
     height:30px;
     line-height:30px;
     display: block;
-    border-top: 1px solid #EDDFF2;
-    border-bottom: 1px solid #EDDFF2;
 }
+
+.zygo_table tbody tr.zygo_line>td.first .sortable-handler{
+
+    -webkit-border-top-left-radius: 4px;
+    -webkit-border-bottom-left-radius: 4px;
+    -moz-border-radius-topleft: 4px;
+    -moz-border-radius-bottomleft: 4px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+}
+
+.zygo_table tbody tr.zygo_line>td.last .zygo_tdhead{
+
+    -webkit-border-top-right-radius: 4px;
+    -webkit-border-bottom-right-radius: 4px;
+    -moz-border-radius-topright: 4px;
+    -moz-border-radius-bottomright: 4px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+
+.zygo_line.open .zygo_tdhead,
+.zygo_table tbody tr.zygo_line.open .sortable-handler{
+    border-bottom: 1px solid #E2D0E8;
+}
+
 .zygo_tdhead{
     padding:8px 8px 8px 0;
 }

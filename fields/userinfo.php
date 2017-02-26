@@ -119,13 +119,13 @@ class JFormFieldUserinfo extends JFormField {
 
 		$this->line_tpl = array(
 			'<tr class="zygo_line zygo_line%num%">'.
-				'<td><span class="sortable-handler">'.
+				'<td class="first"><span class="sortable-handler">'.
 					'<i class="icon-menu"></i>'.
 				'</span></td>'
 			,
 
 
-			'<td class="zygo_td_buttons"><div class="zygo_tdhead"><span class="zygo_toggle_btn"></span></div></td><td><div class="zygo_tdhead">'.
+			'<td class="zygo_td_buttons"><div class="zygo_tdhead"><span class="zygo_toggle_btn"></span></div></td><td class="zygo_td_buttons last"><div class="zygo_tdhead">'.
 			'<span class="zygo_remove_btn"></span></div></td></tr>'		
 		);
 

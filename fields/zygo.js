@@ -36,9 +36,11 @@ jQuery(function ($) {
 			if(zygo_more.is(":visible")){
 				$(this).removeClass('active');
 				zygo_more.slideUp();
+				$(this).closest('.zygo_line').removeClass('open');
 			}else{
 				$(this).addClass('active');
 				zygo_more.slideDown();
+				$(this).closest('.zygo_line').addClass('open');
 			}
 		});
 

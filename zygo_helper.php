@@ -95,7 +95,7 @@ abstract class ZygoHelper {
      */
 	public static function getAvatarTmpl($link){
 		$avatar = self::getAvatarByLink($link);
-		$tl = ($avatar->linkLarge)? 
+		$tl = ($avatar->linkLarge && self::$zygo_params->get('show_avatar_tooltip', 1))? 
 		"title='<img src=\"".$avatar->linkLarge."\" >' class='hasTooltip'" : "";
 		$html = "<span class='zygo_avatar'>";
 		$html .= "<img src='".JURI::root().$avatar->link."' ".$tl." />";
