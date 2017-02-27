@@ -44,7 +44,7 @@ class JFormFieldAvatar extends JFormField
         $plugin = JPluginHelper::getPlugin('user', 'zygo_profile');
 		$pluginParams = new JRegistry();
 		$pluginParams->loadString($plugin->params);
-
+		$avatar_round = $pluginParams->get('avatar_round', 0);
 		$max_width = $pluginParams->get('max_width', 500);	
 		$thumb_width = $pluginParams->get('thumb_width', 100);
 		$thumb_height = $pluginParams->get('thumb_height', 100);
@@ -63,29 +63,29 @@ class JFormFieldAvatar extends JFormField
 
 		$no_av_link = $pluginParams->get('noavatar', 'plugins/user/zygo_profile/fields/images/noPhoto.jpg');
 
-		$noAvImg = '<img src="'.JURI::root().$no_av_link.'" id="zenoavatar" style="width:'.$thumb_width.'px; height:'.$thumb_height.'px" />';
+		$noAvImg = '<img src="'.JURI::root().$no_av_link.'" id="zenoavatar" style="width:'.$thumb_width.'px; height:'.$thumb_height.'px; border-radius:inherit;" />';
 
 		if($value){
 			$avImg=($pluginParams->get('show_avatar_tooltip', 1))? 
-			'<img src="'.JURI::root().$value.'" class="hasTooltip required" title="<img src=\''.JURI::root().str_replace('thumb', 'large', $value).'\' />" />' :  
-			'<img src="'.JURI::root().$value.'" class="required"  />';
+			'<img src="'.JURI::root().$value.'" class="hasTooltip required" style="border-radius:inherit;" title="<img src=\''.JURI::root().str_replace('thumb', 'large', $value).'\' />" />' :  
+			'<img src="'.JURI::root().$value.'" class="required" style="border-radius:inherit;" />';
 		}else{
 			$avImg = $noAvImg;
 		}
 
 		if($value) $ustrFull .= '&avatar='.$value;
-		$html.='<div id="ze_avatar_wrapper" class="img-polaroid img-rounded" style="display:inline-block; margin-bottom:10px;">'.$avImg.'</div><br />';
+		$html.='<div id="ze_avatar_wrapper" class="img-polaroid img-rounded" style="display:inline-block; margin-bottom:10px; border-radius:'.$avatar_round.'%;">'.$avImg.'</div><br />';
 		$html.='<div style="display:none">';
 		$html.='<input id="ze_avatar_input" name="jform[zygo_profile]['.$this->fieldname.'][value]" value="'.$value.'" />';
 		$html.='</div>';
 		
 
 		if($uid || !$app->isAdmin()){
-			$html.='<a class="modal btn" href="'.$ustrFull.'" rel="{handler: \'iframe\', size: {x: '.$frameWidth.', y: (parseInt(jQuery(window).height())-50)}}">
+			$html.='<a class="modal btn btn-info" href="'.$ustrFull.'" rel="{handler: \'iframe\', size: {x: '.$frameWidth.', y: (parseInt(jQuery(window).height())-50)}}" style="display:inline-block; position:inherit;">
 				<span class="icon-apply"></span>
 			  '.JText::_('PLG_USER_ZYGO_PROFILE_CHANGE_AVATAR').'
 			</a>';
-			$html.=' <a class="btn btn-danger" href="javascript:void(null)" onclick="zeDelAvatar()" >
+			if($avImg != $noAvImg) $html.=' <a id="zeDelAvatar" class="btn btn-danger" href="javascript:void(null)" onclick="zeDelAvatar()" >
 				<span class="icon-trash"></span>
 			  '.JText::_('PLG_USER_ZYGO_PROFILE_DELETE_AVATAR').'
 			</a>';
@@ -99,6 +99,7 @@ class JFormFieldAvatar extends JFormField
 				if(confirm('".JText::_("PLG_USER_ZYGO_PROFILE_DELETE_AVATAR_SURE")."')){
 					jQuery('#ze_avatar_wrapper').html(jQuery('#zenoavatarDiv').html());
 					jQuery('#ze_avatar_input').val('noavatar');
+					jQuery('#zeDelAvatar').css( 'display', 'none');
 				}
 			}
 		");
