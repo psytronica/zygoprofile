@@ -7,7 +7,7 @@
 	<license>GNU General Public License version 2 or later; see LICENSE.txt</license>
 	<authorEmail>zygopterix@gmail.com</authorEmail>
 	<authorUrl>http://psytronica.ru</authorUrl>
-	<version>3.6.0</version>
+	<version>3.6.1</version>
 	<description>PLG_USER_ZYGO_PROFILE_XML_DESCRIPTION</description>
  
 	<files>
@@ -33,10 +33,11 @@
 			</fieldset>
  			
 			<fieldset name="advanced">
- 				<field name="thumb_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_WIDTH" default="100" filter="uint" maxlength="3"/>
-                		<field name="thumb_height" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_HEIGHT" default="100" filter="uint" maxlength="3"/>
-                		<field name="max_width" type="text" label="PLG_USER_ZYGO_PROFILE_LABEL_LARGE_WIDTH" default="500" filter="uint" maxlength="3"/>
-				<field name="max_file" type="text" label="PLG_USER_ZYGO_PROFILE_MAX_FILE_LABEL" default="2" filter="uint" maxlength="2"/>
+ 				<field name="avatar_round" type="number" label="PLG_USER_ZYGO_PROFILE_AVATAR_ROUND_LABEL" description="PLG_USER_ZYGO_PROFILE_AVATAR_ROUND_DESC" default="0" min="0" max="100"/>
+				<field name="thumb_width" type="number" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_WIDTH" default="100" min="0" max="1000"/>
+				<field name="thumb_height" type="number" label="PLG_USER_ZYGO_PROFILE_LABEL_THUMB_HEIGHT" default="100" min="0" max="1000"/>
+				<field name="max_width" type="number" label="PLG_USER_ZYGO_PROFILE_LABEL_LARGE_WIDTH" default="500" min="0" max="1000"/>
+				<field name="max_file" type="number" label="PLG_USER_ZYGO_PROFILE_MAX_FILE_LABEL" default="2" min="0" max="100"/>
                			<field name="allowed_image_types" type="text" default="bmp,gif,jpg,png" label="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_LABEL" description="PLG_USER_ZYGO_PROFILE_ALLOWED_IMAGE_EXTENSIONS_DESC"/>
 				<field name="noavatar" type="media" label="PLG_USER_ZYGO_PROFILE_LABEL_NOAVATAR" />
 				<field name="texthelp" filter='raw' type="textarea" label="PLG_USER_ZYGO_PROFILE_LABEL_IMAGE_EDIT_TEXT" default="" />
@@ -56,15 +57,15 @@
  			</fieldset>
 			
 			<fieldset name="webcam">
-				<field name="webcam_enable" type="radio" class="radio btn-group btn-group-yesno" default="1" label="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_DESC">
+				<field name="webcam_enable" type="radio" class="btn-group btn-group-yesno" default="1" label="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_DESC">
 				  <option value="0">JNO</option>
 				  <option value="1">JYES</option>
 				</field>
-				<field name="webcam_enable_flash" type="radio" class="radio btn-group btn-group-yesno" default="1" label="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_FLASH_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_FLASH_DESC">
+				<field name="webcam_enable_flash" type="radio" class="btn-group btn-group-yesno" default="1" label="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_FLASH_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_ENABLE_FLASH_DESC">
 				  <option value="0">JNO</option>
 				  <option value="1">JYES</option>
 				</field>
-				<field name="webcam_force_flash" type="radio" class="radio btn-group btn-group-yesno" default="0" label="PLG_USER_ZYGO_PROFILE_WEBCAM_FORCE_FLASH_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_FORCE_FLASH_DESC">
+				<field name="webcam_force_flash" type="radio" class="btn-group btn-group-yesno" default="0" label="PLG_USER_ZYGO_PROFILE_WEBCAM_FORCE_FLASH_LABEL" description="PLG_USER_ZYGO_PROFILE_WEBCAM_FORCE_FLASH_DESC">
 				  <option value="0">JNO</option>
 				  <option value="1">JYES</option>
 				</field>
