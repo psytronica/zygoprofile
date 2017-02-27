@@ -97,8 +97,9 @@ abstract class ZygoHelper {
 		$avatar = self::getAvatarByLink($link);
 		$tl = ($avatar->linkLarge && self::$zygo_params->get('show_avatar_tooltip', 1))? 
 		"title='<img src=\"".$avatar->linkLarge."\" >' class='hasTooltip'" : "";
-		$html = "<span class='zygo_avatar'>";
-		$html .= "<img src='".JURI::root().$avatar->link."' ".$tl." />";
+		$avatar_round = self::$zygo_params->get('avatar_round', 0);
+		$html = "<span class='zygo_avatar' style='border-radius:".$avatar_round."%;'>";
+		$html .= "<img src='".JURI::root().$avatar->link."' ".$tl." style='border-radius:inherit;'/>";
 		$html .= "</span>";
 		return $html;
 	}
