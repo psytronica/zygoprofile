@@ -113,7 +113,7 @@ jQuery(function($){
 					if($('#uploaded_image').find('#thumbnail').height()){
 						$('#uploaded_image').find('#thumbnail').imgAreaSelect({ disable: true, hide: true }); 
 					}
-					loadingmessage(UPLOADING_MSG, 'show');
+					loadingmessage(ZE_UPLOADING_MSG, 'show');
 			   },
 			   onComplete: function(response) {
 			   		loadingmessage('', 'hide');
@@ -125,7 +125,7 @@ jQuery(function($){
 						var current_width = response[2];
 						var current_height = response[3];
 						//display message that the file has been uploaded
-						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">'+UPLOADING_SUCCESS_MSG+'</strong> <span>'+UPLOADING_SUCCESS_DESC_MSG+'</span></div>');
+						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">'+ZE_UPLOADING_SUCCESS_MSG+'</strong> <span>'+ZE_UPLOADING_SUCCESS_DESC_MSG+'</span></div>');
 						//put the image in the appropriate div
 						$('#uploaded_image').html('<img src="'+responseMsg+'" id="thumbnail" /><div style="width:'+ZE_THUMB_WIDTH+'px; height:'+ZE_THUMB_HEIGHT+'px;"><img src="'+responseMsg+'" style="position: relative;" id="thumbnail_preview" /></div>');
 							var intId = setInterval( function() {
@@ -175,7 +175,7 @@ jQuery(function($){
 				$('#uploaded_image').find('#thumbnail').imgAreaSelect({ disable: true, hide: true });
 				var srcAvArr = $('#uploaded_image').find('#thumbnail').attr('src').split('/');
 
-				loadingmessage(SAVING_THUMB_MSG, 'show');
+				loadingmessage(ZE_SAVING_THUMB_MSG, 'show');
 
 				$.ajax({
 					type: 'POST',
@@ -190,8 +190,8 @@ jQuery(function($){
 						var responseLargeImage = response[1];
 						var responseThumbImage = response[2];
 						if(responseType=="success"){
-
-							window.parent.document.getElementById('ze_avatar_wrapper').innerHTML = '<img src="'+ZE_PATH+responseThumbImage+'" />';
+							window.parent.jQuery('#zeDelAvatar').css( 'display', 'inline-block');
+							window.parent.document.getElementById('ze_avatar_wrapper').innerHTML = '<img src="'+ZE_PATH+responseThumbImage+'" style="border-radius:'+ZE_AVATAR_ROUND+'%;" />';
 							window.parent.document.getElementById('ze_avatar_input').value = responseThumbImage;
 
 							window.parent.SqueezeBox.close();
@@ -233,9 +233,9 @@ jQuery(function($){
 			Webcam.set({
 				width: 400,
 				height: 300,
-				jpeg_quality: WEBCAM_JPEG_QUALITY,
-				enable_flash: WEBCAM_ENABLE_FLASH,
-				force_flash: WEBCAM_FORCE_FLASH,
+				jpeg_quality: ZE_WEBCAM_JPEG_QUALITY,
+				enable_flash: ZE_WEBCAM_ENABLE_FLASH,
+				force_flash: ZE_WEBCAM_FORCE_FLASH,
 				upload_name: 'image'
 			});
 			$('#webcam_attach').hide();
@@ -266,7 +266,7 @@ jQuery(function($){
 					if($('#uploaded_image').find('#thumbnail').height()){
 						$('#uploaded_image').find('#thumbnail').imgAreaSelect({ disable: true, hide: true }); 
 					}
-					loadingmessage(UPLOADING_MSG, 'show');
+					loadingmessage(ZE_UPLOADING_MSG, 'show');
 				});			
 				Webcam.on( 'uploadComplete', function(code, text) {
 					loadingmessage('', 'hide');
@@ -278,7 +278,7 @@ jQuery(function($){
 						var current_width = response[2];
 						var current_height = response[3];
 						//display message that the file has been uploaded
-						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">'+UPLOADING_SUCCESS_MSG+'</strong> <span>'+UPLOADING_SUCCESS_DESC_MSG+'</span></div>');
+						$('#upload_status').show().html('<div class="alert alert-success"><strong class="success">'+ZE_UPLOADING_SUCCESS_MSG+'</strong> <span>'+ZE_UPLOADING_SUCCESS_DESC_MSG+'</span></div>');
 						//put the image in the appropriate div
 						$('#uploaded_image').html('<img src="'+responseMsg+'" id="thumbnail" /><div style="width:'+ZE_THUMB_WIDTH+'px; height:'+ZE_THUMB_HEIGHT+'px;"><img src="'+responseMsg+'" style="position: relative;" id="thumbnail_preview" /></div>');
 						var intId = setInterval( function() {
