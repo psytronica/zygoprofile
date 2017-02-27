@@ -78,7 +78,7 @@ if ($webcam_force_flash == 1) {
 } else {
     $webcam_force_flash = false;
 }
-
+$avatar_round = $pluginParams->get('avatar_round', 0);
 $thumb_width = $pluginParams->get('thumb_width', 100);
 $thumb_height = $pluginParams->get('thumb_height', 100);
 $helptext = $pluginParams->get('texthelp');
@@ -92,13 +92,14 @@ var ZE_PATH = "'.JURI::root().'";
 var ZE_IMAGE_HANDLING_PATH = "'.$ustrFull.'";
 var ZE_THUMB_WIDTH = '.$thumb_width.';
 var ZE_THUMB_HEIGHT = '.$thumb_height.';
-var WEBCAM_ENABLE_FLASH = \''.$webcam_enable_flash.'\';
-var WEBCAM_FORCE_FLASH = \''.$webcam_force_flash.'\';
-var WEBCAM_JPEG_QUALITY = \''.$webcam_jpeg_quality.'\';
-var UPLOADING_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_MSG').'\';
-var UPLOADING_SUCCESS_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_MSG').'\';
-var UPLOADING_SUCCESS_DESC_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_DESC_MSG').'\';
-var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\';
+var ZE_AVATAR_ROUND = \''.$avatar_round.'\';
+var ZE_WEBCAM_ENABLE_FLASH = \''.$webcam_enable_flash.'\';
+var ZE_WEBCAM_FORCE_FLASH = \''.$webcam_force_flash.'\';
+var ZE_WEBCAM_JPEG_QUALITY = \''.$webcam_jpeg_quality.'\';
+var ZE_UPLOADING_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_MSG').'\';
+var ZE_UPLOADING_SUCCESS_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_MSG').'\';
+var ZE_UPLOADING_SUCCESS_DESC_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_UPLOADING_SUCCESS_DESC_MSG').'\';
+var ZE_SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\';
 ';
 
 
@@ -153,7 +154,7 @@ var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\
 			<?php
 				if($avatar){
 					echo '<img src="'.JURI::root().str_replace('thumb', 'large', $avatar).'" id="thumbnail" />
-					<div style="width:'.$thumb_width.'px; height:'.$thumb_height.'px;">
+					<div style="width:'.$thumb_width.'px; height:'.$thumb_height.'px; border-radius:'.$avatar_round.'%;">
 						<img src="'.JURI::root().str_replace('thumb', 'large', $avatar).'" style="position: relative;" id="thumbnail_preview" />
 					</div>';
 
@@ -163,9 +164,9 @@ var SAVING_THUMB_MSG = \''.JText::_('PLG_USER_ZYGO_PROFILE_SAVING_THUMB_MSG').'\
 		<div style="clear:both"></div>
 		<br/>
 		<div style="float:right;">
-			<a id="webcam_upload" class="btn btn-success" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?></a>
-			<a id="webcam_unfreeze" class="btn btn-danger" style="display:none;" href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UNFREEZE"); ?></a>
-			<a id="webcam_freeze" class="btn btn-primary" style="display:none;"href="#"><?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_FREEZE"); ?></a>
+			<input type="button" id="webcam_upload" style="display:none;" class="btn btn-success" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UPLOAD"); ?>" />
+			<input type="button" id="webcam_unfreeze" style="display:none;" class="btn btn-danger" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_UNFREEZE"); ?>" />
+			<input type="button" id="webcam_freeze" style="display:none;" class="btn btn-primary" value="<?php echo JText::_("PLG_USER_ZYGO_PROFILE_WEBCAM_FREEZE"); ?>" />
 		</div>
 		<div id="webcam_preview" style="display:none;"></div>
 		<div style="clear:both"></div>	
