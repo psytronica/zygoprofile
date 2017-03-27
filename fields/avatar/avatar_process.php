@@ -25,6 +25,7 @@
 
 $session = JFactory::getSession();
 $app = JFactory::getApplication();
+$user = JFactory::getUser();
 $post = $app->input->post;
 $userid = $app->input->getInt('id');
 if(!$userid){
@@ -35,7 +36,6 @@ if(!$userid){
 		$session->set( 'zeavuserid',$userid);
 	}
 }else{
-	$user = JFactory::getUser();
 	$canEdit = $user->authorise('core.edit', 'com_users');
 	if($user->id!=$userid && !$canEdit) echo "error|ACCESS DENIED";
 }
@@ -194,7 +194,14 @@ if ($post->get('save_thumb')=="SaveThumbnail") {
 
 	$zelarge=$post->get('zelarge');
 	if($zelarge){
-		$large_image_location=$upload_path.$zelarge;
+
+		if(!file_exists($upload_path.$zelarge) && $user->id){
+			$up_path = $av_folder.'/'.$user->id.'/';   
+		}else{
+			$up_path = $upload_path;
+		}
+
+		$large_image_location=$up_path.$zelarge;
 		$zethumb=(strpos($zelarge, 'tmp_')!==false)? 
 				str_replace('tmp_large', 'tmp_thumb', $zelarge):
 				str_replace('large', 'tmp_thumb', $zelarge);
