@@ -191,7 +191,7 @@ jQuery(function($){
 						var responseThumbImage = response[2];
 						if(responseType=="success"){
 
-							window.parent.document.getElementById('ze_avatar_wrapper').innerHTML = '<img src="'+ZE_PATH+responseThumbImage+'" />';
+							window.parent.document.getElementById('ze_avatar_wrapper').innerHTML = '<img src="'+ZE_PATH+responseThumbImage+'?date='+(new Date().getTime())+'" />';
 							window.parent.document.getElementById('ze_avatar_input').value = responseThumbImage;
 
 							window.parent.SqueezeBox.close();
