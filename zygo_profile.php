@@ -215,12 +215,12 @@ class plgUserZygo_profile extends JPlugin {
 		if ($link && self::$show_avatar_tooltip) {
 
 			$v1arr = '<img class="hasTooltip avatar avInProfile" src="'.
-			JURI::root().$link.'"title="<img src=\''.JURI::root().$linkLarge.'\'>">';
+			JURI::root().$link.'?date='.ceil(microtime(true)).'" title="<img src=\''.JURI::root().$linkLarge.'?date='.ceil(microtime(true)).'\'>">';
 
 		} else {
 
 			if(!$link) $link  = self::$noavatar;
-			$v1arr = '<img class="avatar avInProfile" src="'.JURI::root().$link.'">';
+			$v1arr = '<img class="avatar avInProfile" src="'.JURI::root().$link.'?date='.ceil(microtime(true)).'">';
 		}
 		return $v1arr;
 	}
