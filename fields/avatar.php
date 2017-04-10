@@ -67,8 +67,8 @@ class JFormFieldAvatar extends JFormField
 
 		if($value){
 			$avImg=($pluginParams->get('show_avatar_tooltip', 1))? 
-			'<img src="'.JURI::root().$value.'" class="hasTooltip required" title="<img src=\''.JURI::root().str_replace('thumb', 'large', $value).'\' />" />' :  
-			'<img src="'.JURI::root().$value.'" class="required"  />';
+			'<img src="'.JURI::root().$value.'?date='.ceil(microtime(true)).'" class="hasTooltip required" title="<img src=\''.JURI::root().str_replace('thumb', 'large', $value).'\' />" />' :  
+			'<img src="'.JURI::root().$value.'?date='.ceil(microtime(true)).'" class="required"  />';
 		}else{
 			$avImg = $noAvImg;
 		}
