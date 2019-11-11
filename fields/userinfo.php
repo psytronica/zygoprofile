@@ -79,8 +79,8 @@ class JFormFieldUserinfo extends JFormField {
 			$this->value = array();
 		}
 		if (!isset($this->value['code'][0])) {
-			$this->value['code'] = array();
-			$this->value['code'][0] = true;
+			if (isset($this->value['code'])) $this->value['code'][0] = true;
+			else $this->value=['code'=>[true]];
  		}
 
 		return $codeKeys;
