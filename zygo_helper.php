@@ -1,7 +1,7 @@
 <?php
 /**
 * @id           $Id$
-* @author       Sherza (zygopterix@gmail.com)
+* @author       Sherza (sherza.web@gmail.com)
 * @package      ZYGO Profile
 * @copyright    Copyright (C) 2015 Psytronica.ru. http://psytronica.ru  All rights reserved.
 * @license      GNU/GPL license: http://www.gnu.org/copyleft/gpl.html
